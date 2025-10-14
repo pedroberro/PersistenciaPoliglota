@@ -1,3 +1,12 @@
+package org.example.service;
+
+import org.springframework.stereotype.Service;
+import org.example.repository.mongodb.MedicionRepository;
+import org.example.model.mongodb.Medicion;
+
+import java.time.Instant;
+import java.util.List;
+
 @Service
 public class MedicionService {
   private final MedicionRepository repo;
@@ -5,7 +14,7 @@ public class MedicionService {
   public MedicionService(MedicionRepository repo) { this.repo = repo; }
 
   public Medicion save(Medicion m) {
-    if (m.getTimestamp()==null) m.setTimestamp(Instant.now());
+    if (m.getTimestamp() == null) m.setTimestamp(Instant.now());
     return repo.save(m);
   }
 

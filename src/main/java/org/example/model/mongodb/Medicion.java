@@ -1,4 +1,5 @@
-// package org.tp.mongo;
+package org.example.model.mongodb;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;

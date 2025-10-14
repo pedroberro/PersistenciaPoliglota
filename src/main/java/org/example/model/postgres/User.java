@@ -1,14 +1,16 @@
-// package org.tp.model;
+package org.example.model.postgres;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String fullName;
     @Column(unique = true)

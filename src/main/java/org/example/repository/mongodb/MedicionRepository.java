@@ -1,4 +1,7 @@
+package org.example.repository.mongodb;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.example.model.mongodb.Medicion;
 import java.time.Instant;
 import java.util.List;
 

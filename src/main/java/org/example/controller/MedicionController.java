@@ -1,3 +1,18 @@
+package org.example.controller;
+
+import org.example.service.MedicionService;
+import org.example.model.mongodb.Medicion;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.bson.Document;
+
+import java.time.Instant;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class MedicionController {
