@@ -1,3 +1,4 @@
+package org.example.model.postgres;
 
 import jakarta.persistence.*;
 import lombok.*;
