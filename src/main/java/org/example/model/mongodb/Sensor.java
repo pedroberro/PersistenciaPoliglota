@@ -14,7 +14,7 @@ public class Sensor {
     @Id
     private String id;
     private String nombre;
-    private String tipo; // "temperatura" o "humedad"
+    private String tipo; // "temperature" o "humidity"
     private Double latitud;
     private Double longitud;
     private String ciudad;

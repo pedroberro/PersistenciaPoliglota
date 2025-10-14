@@ -41,9 +41,9 @@ public class MedicionController {
       Aggregation.match(Criteria.where("locationSnapshot.city").is(city)
                       .and("timestamp").gte(f).lte(t)),
       Aggregation.group("locationSnapshot.city")
-         .avg("temperatura").as("avgTemp")
-         .min("temperatura").as("minTemp")
-         .max("temperatura").as("maxTemp")
+         .avg("temperature").as("avgTemp")
+         .min("temperature").as("minTemp")
+         .max("temperature").as("maxTemp")
     );
     AggregationResults<Document> res = mongoTemplate.aggregate(agg, "Mediciones", Document.class);
     return ResponseEntity.ok(res.getMappedResults());
