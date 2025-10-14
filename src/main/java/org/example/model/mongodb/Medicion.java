@@ -16,8 +16,8 @@ public class Medicion {
   private String id;
   private String sensorId;
   private Instant timestamp;
-  private Double temperature;
-  private Double humidity;
+  private Double temperatura;
+  private Double humedad;
   private Map<String,Object> metadata; // battery, signal...
   private Location locationSnapshot;
 
