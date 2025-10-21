@@ -3,7 +3,7 @@
         <parent>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-parent</artifactId>
-            <version>3.1.6</version>
+            <version>4.0.0-M3</version>
             <relativePath/> <!-- lookup parent from repository -->
         </parent>
 
@@ -12,9 +12,10 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <java.version>17</java.version>
-        <spring.boot.version>3.1.6</spring.boot.version>
-        <lombok.version>1.18.26</lombok.version>
+    <java.version>25</java.version>
+    <spring.boot.version>4.0.0-M3</spring.boot.version>
+    <!-- try newer Lombok versions to improve compatibility with newer JDKs -->
+    <lombok.version>1.18.42</lombok.version>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
     </properties>
 <dependencies>
@@ -117,7 +118,8 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[17,17]</version>
+                                    <!-- allow Java 25 (set exact or a range if you want multiple versions) -->
+                                    <version>[25,25]</version>
                                 </requireJavaVersion>
                             </rules>
                             <fail>true</fail>

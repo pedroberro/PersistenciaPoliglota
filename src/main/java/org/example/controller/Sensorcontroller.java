@@ -32,8 +32,10 @@ public class SensorController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable String id) {
 		Optional<Sensor> opt = service.obtenerPorId(id);
-		return opt.map(ResponseEntity::ok)
-				.orElseGet(() -> ResponseEntity.status(404).body("Sensor no encontrado"));
+		if (opt.isPresent()) {
+			return ResponseEntity.ok(opt.get());
+		}
+		return ResponseEntity.status(404).body("Sensor no encontrado");
 	}
 
 	@GetMapping("/byCity")
