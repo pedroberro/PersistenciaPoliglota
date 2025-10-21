@@ -1,7 +1,5 @@
 package org.example.controller;
 
-import org.example.model.mongodb.Sensor;
-import org.example.model.mongodb.Medicion;
 import org.example.service.SensorService;
 import org.example.service.MedicionService;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,16 +23,14 @@ public class DashboardController {
 
     @GetMapping("/summary")
     public ResponseEntity<Map<String, Object>> summary() {
-        List<Sensor> sensores = sensorService.listarTodos();
-        int totalSensors = sensores.size();
-        long active = sensores.stream().filter(s -> "activo".equalsIgnoreCase(s.getEstado())).count();
+        long totalSensors = sensorService.countAll();
+        // active sensors count (we still need to scan for estado) — alternative: add repo method findByEstado
+        long active = sensorService.listarTodos().stream().filter(s -> "activo".equalsIgnoreCase(s.getEstado())).count();
 
-        // crude measurement count: not optimal for large datasets but acceptable for a small dashboard
-        List<Medicion> recent = medicionService.getBySensor("", Instant.EPOCH, Instant.now());
-        int totalMeasurements = recent.size();
+        long totalMeasurements = medicionService.countAll();
 
         Map<String, Object> dto = new HashMap<>();
-        dto.put("totalSensors", totalSensors);
+    dto.put("totalSensors", totalSensors);
         dto.put("activeSensors", active);
         dto.put("totalMeasurements", totalMeasurements);
         dto.put("timestamp", Instant.now().toString());

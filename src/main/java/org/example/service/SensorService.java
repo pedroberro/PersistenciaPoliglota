@@ -60,4 +60,8 @@ public class SensorService {
     public void eliminar(String id) {
         repo.deleteById(id);
     }
+
+    public long countAll() {
+        return repo.count();
+    }
 }

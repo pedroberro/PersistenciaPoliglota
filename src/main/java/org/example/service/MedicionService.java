@@ -21,4 +21,8 @@ public class MedicionService {
   public List<Medicion> getBySensor(String sensorId, Instant from, Instant to) {
     return repo.findBySensorIdAndTimestampBetween(sensorId, from, to);
   }
+
+  public long countAll() {
+    return repo.count();
+  }
 }
