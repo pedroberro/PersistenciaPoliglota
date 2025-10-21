@@ -1,0 +1,62 @@
+# Archivos compilados
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Logs
+logs/
+*.log
+
+# Archivos de configuración local
+.env
+.env.local
+.env.prod
+.env.test
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+docker-compose.prod.yml
+
+# Datos de desarrollo
+data/
+*.db
+*.sqlite
+
+# Archivos temporales
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Archivos de backup
+*.bak
+*.backup
+*.old
+
+# Archivos de configuración específicos del entorno
+application-local.yml
+application-local.properties
