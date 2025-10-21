@@ -13,7 +13,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
  * Redis configuration. Uses existing RedisConnectionFactory (Spring Boot auto-config).
  */
 @Configuration
-public class Redisconfig {
+public class RedisConfig {
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
