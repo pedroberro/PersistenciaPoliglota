@@ -25,4 +25,10 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+
+//Prueba rapida de que esto anda lol
+>>>>>>> Stashed changes
