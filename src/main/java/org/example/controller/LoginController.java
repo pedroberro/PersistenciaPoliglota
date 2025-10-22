@@ -51,4 +51,18 @@ public class LoginController {
         }
         return ResponseEntity.status(401).body("Sesión inválida o expirada");
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestParam String fullName, 
+                                     @RequestParam String email, 
+                                     @RequestParam String password) {
+        try {
+            User user = userService.register(fullName, email, password);
+            return ResponseEntity.ok("Usuario registrado exitosamente. ID: " + user.getId());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error interno del servidor");
+        }
+    }
 }
