@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.ReportesController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #34495e; -fx-padding: 15;">
+            <children>
+                <Label text="Reportes" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18"/>
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="backButton" text="Volver" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" onAction="#handleBack"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" padding="20">
+            <HBox spacing="10">
+                <TextField fx:id="ciudadField" promptText="Ciudad"/>
+                <DatePicker fx:id="desdePicker"/>
+                <DatePicker fx:id="hastaPicker"/>
+                <Button fx:id="generarBtn" text="Generar Reporte" style="-fx-background-color: #27ae60; -fx-text-fill: white;" onAction="#handleGenerarReporte"/>
+            </HBox>
+
+            <TextArea fx:id="reporteArea" prefHeight="300" editable="false"/>
+        </VBox>
+    </center>
+</BorderPane>
