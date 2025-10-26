@@ -1,113 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.DashboardController">
-   <top>
-      <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #34495e; -fx-padding: 15;">
-         <children>
-            <Label text="Persistencia Políglota" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="userLabel" text="Usuario" textFill="WHITE" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" text="Cerrar Sesión" />
-         </children>
-      </HBox>
-   </top>
-   
-   <center>
-      <ScrollPane fitToWidth="true">
-         <content>
-            <VBox spacing="20.0">
-               <children>
-                  <!-- Resumen General -->
-                  <VBox spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10; -fx-padding: 20;">
-                     <children>
-                        <Label text="Resumen General" textFill="#2c3e50">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        
-                        <HBox spacing="30.0">
-                           <children>
-                              <VBox alignment="CENTER" spacing="5.0">
-                                 <children>
-                                    <Label fx:id="totalSensorsLabel" text="0" textFill="#3498db">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Total Sensores" textFill="#7f8c8d" />
-                                 </children>
-                              </VBox>
-                              
-                              <VBox alignment="CENTER" spacing="5.0">
-                                 <children>
-                                    <Label fx:id="activeSensorsLabel" text="0" textFill="#27ae60">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Sensores Activos" textFill="#7f8c8d" />
-                                 </children>
-                              </VBox>
-                              
-                              <VBox alignment="CENTER" spacing="5.0">
-                                 <children>
-                                    <Label fx:id="totalMeasurementsLabel" text="0" textFill="#f39c12">
-                                       <font>
-                                          <Font name="System Bold" size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Total Mediciones" textFill="#7f8c8d" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  
-                  <!-- Estado de Sensores -->
-                  <VBox spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10; -fx-padding: 20;">
-                     <children>
-                        <Label text="Estado de Sensores" textFill="#2c3e50">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        
-                        <TableView fx:id="sensorsTable" prefHeight="200.0">
-                           <columns>
-                              <TableColumn fx:id="sensorNameColumn" prefWidth="150.0" text="Nombre" />
-                              <TableColumn fx:id="sensorTypeColumn" prefWidth="100.0" text="Tipo" />
-                              <TableColumn fx:id="sensorStatusColumn" prefWidth="100.0" text="Estado" />
-                              <TableColumn fx:id="sensorLocationColumn" prefWidth="150.0" text="Ubicación" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </VBox>
-                  
-                  <!-- Acciones Rápidas -->
-                  <HBox spacing="15.0">
-                     <children>
-                        <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#handleRefresh" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Actualizar Datos" />
-                        <Button fx:id="sensorsButton" mnemonicParsing="false" onAction="#handleSensors" style="-fx-background-color: #27ae60; -fx-text-fill: white;" text="Gestionar Sensores" />
-                        <Button fx:id="reportsButton" mnemonicParsing="false" onAction="#handleReports" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Ver Reportes" />
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </center>
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.ui.DashboardController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #34495e; -fx-padding: 12;">
+            <children>
+                <Label text="Persistencia Políglota" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="logoutBtn" text="Cerrar sesión" onAction="#handleLogout" style="-fx-background-color:#e74c3c; -fx-text-fill: white;"/>
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="10" padding="10">
+            <children>
+                <Button fx:id="btnSensores" text="Sensores" onAction="#openSensores" prefWidth="160" />
+                <Button fx:id="btnReportes" text="Reportes" onAction="#openReportes" prefWidth="160"/>
+                <Button fx:id="btnFacturacion" text="Facturación" onAction="#openFacturacion" prefWidth="160"/>
+                <Separator />
+                <Label text="Estadísticas" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblTotalSensores" text="Sensores: -"/>
+                <Label fx:id="lblActivos" text="Activos: -"/>
+                <Label fx:id="lblAlertas" text="Alertas activas: -"/>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="12" padding="16">
+            <children>
+                <Label text="Panel principal" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <TableView fx:id="summaryTable" prefHeight="380">
+                    <columns>
+                        <TableColumn fx:id="colMetric" text="Métrica" prefWidth="240"/>
+                        <TableColumn fx:id="colValue" text="Valor" prefWidth="200"/>
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </center>
 </BorderPane>

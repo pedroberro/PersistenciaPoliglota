@@ -6,38 +6,38 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.controller.FacturacionController">
+            fx:controller="org.example.ui.FacturacionController">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #34495e; -fx-padding: 15;">
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #34495e; -fx-padding: 12;">
             <children>
                 <Label text="Facturación" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold" size="18"/>
-                    </font>
+                    <font><Font name="System Bold" size="18"/></font>
                 </Label>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button fx:id="backButton" text="Volver" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" onAction="#handleBack"/>
+                <Button fx:id="backBtn" text="Volver" onAction="#handleBack" style="-fx-background-color:#e74c3c; -fx-text-fill: white;"/>
             </children>
         </HBox>
     </top>
 
     <center>
-        <VBox spacing="20" padding="20">
-            <TableView fx:id="facturasTable" prefHeight="300">
-                <columns>
-                    <TableColumn fx:id="numeroColumn" text="Número" prefWidth="80"/>
-                    <TableColumn fx:id="usuarioColumn" text="Usuario" prefWidth="150"/>
-                    <TableColumn fx:id="fechaColumn" text="Fecha" prefWidth="120"/>
-                    <TableColumn fx:id="totalColumn" text="Total" prefWidth="100"/>
-                    <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="100"/>
-                </columns>
-            </TableView>
+        <VBox spacing="12" padding="16">
+            <children>
+                <TableView fx:id="facturasTable" prefHeight="360">
+                    <columns>
+                        <TableColumn fx:id="numeroColumn" text="Número" prefWidth="80"/>
+                        <TableColumn fx:id="usuarioColumn" text="Usuario" prefWidth="180"/>
+                        <TableColumn fx:id="fechaColumn" text="Fecha" prefWidth="140"/>
+                        <TableColumn fx:id="totalColumn" text="Total" prefWidth="120"/>
+                        <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="120"/>
+                    </columns>
+                </TableView>
 
-            <HBox spacing="10">
-                <Button fx:id="crearFacturaBtn" text="Crear Factura" style="-fx-background-color: #27ae60; -fx-text-fill: white;" onAction="#handleCrearFactura"/>
-                <Button fx:id="registrarPagoBtn" text="Registrar Pago" style="-fx-background-color: #3498db; -fx-text-fill: white;" onAction="#handleRegistrarPago"/>
-                <Button fx:id="actualizarBtn" text="Actualizar" style="-fx-background-color: #f39c12; -fx-text-fill: white;" onAction="#handleActualizar"/>
-            </HBox>
+                <HBox spacing="10">
+                    <Button fx:id="crearFacturaBtn" text="Crear Factura" onAction="#handleCrearFactura" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                    <Button fx:id="registrarPagoBtn" text="Registrar Pago" onAction="#handleRegistrarPago" style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    <Button fx:id="actualizarBtn" text="Actualizar" onAction="#handleActualizar" style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+                </HBox>
+            </children>
         </VBox>
     </center>
 </BorderPane>
