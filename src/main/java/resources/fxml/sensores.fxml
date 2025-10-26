@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.ui.SensoresController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #34495e; -fx-padding: 12;">
+            <children>
+                <Label text="Gestión de Sensores" textFill="WHITE">
+                    <font><Font name="System Bold" size="18"/></font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="backButton" text="Volver" onAction="#handleBack" style="-fx-background-color:#e74c3c; -fx-text-fill: white;"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="12" padding="16">
+            <children>
+                <HBox spacing="10">
+                    <TextField fx:id="buscarField" promptText="Buscar por nombre/ciudad/pais" HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="buscarBtn" text="Buscar" onAction="#handleBuscar" />
+                </HBox>
+
+                <TableView fx:id="sensoresTable" prefHeight="320">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="70"/>
+                        <TableColumn fx:id="nombreColumn" text="Nombre" prefWidth="160"/>
+                        <TableColumn fx:id="tipoColumn" text="Tipo" prefWidth="120"/>
+                        <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="100"/>
+                        <TableColumn fx:id="ciudadColumn" text="Ciudad" prefWidth="120"/>
+                        <TableColumn fx:id="paisColumn" text="País" prefWidth="120"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10">
+                    <Button fx:id="agregarBtn" text="Agregar" onAction="#handleAgregar" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                    <Button fx:id="actualizarBtn" text="Actualizar" onAction="#handleActualizar" style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    <Button fx:id="eliminarBtn" text="Eliminar" onAction="#handleEliminar" style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
