@@ -12,7 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-    <java.version>25</java.version>
+    <java.version>21</java.version>
     <spring.boot.version>4.0.0-M3</spring.boot.version>
     <!-- try newer Lombok versions to improve compatibility with newer JDKs -->
     <lombok.version>1.18.42</lombok.version>
@@ -118,8 +118,8 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <!-- allow Java 25 (set exact or a range if you want multiple versions) -->
-                                    <version>[25,25]</version>
+                                    <!-- allow Java 21 and newer -->
+                                    <version>[21,)</version>
                                 </requireJavaVersion>
                             </rules>
                             <fail>true</fail>

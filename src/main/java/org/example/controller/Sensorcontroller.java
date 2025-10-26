@@ -1,3 +1,6 @@
+// Deprecated: use SensorController.java (correctly-cased filename).
+// This file left intentionally empty to avoid duplicate public class definitions on case-insensitive filesystems.
+
 package org.example.controller;
 
 import org.example.model.mongodb.Sensor;
