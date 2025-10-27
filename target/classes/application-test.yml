@@ -1,0 +1,50 @@
+# Configuración para testing
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    hikari:
+      maximum-pool-size: 5
+  
+  mongodb:
+    uri: mongodb://localhost:27017/test_db
+  
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 1 # Base de datos separada para tests
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        "[format_sql]": false
+  
+  cache:
+    type: simple
+    cache-names: test-cache
+
+server:
+  port: 0 # Puerto aleatorio para tests
+
+# Configuración de logging para tests
+logging:
+  level:
+    org.example: WARN
+    "[org.springframework]": WARN
+    "[org.hibernate]": WARN
+    "[org.springframework.test]": WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Deshabilitar actuator en tests
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
