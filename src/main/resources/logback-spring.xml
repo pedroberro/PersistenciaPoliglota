@@ -105,7 +105,7 @@
     </springProfile>
     
     <!-- Configuración por defecto -->
-    <springProfile name="!dev & !prod & !test">
+    <springProfile name="!dev &amp; !prod &amp; !test">
         <root level="${LOG_LEVEL_ROOT}">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
