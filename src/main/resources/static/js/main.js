@@ -399,6 +399,157 @@ function formatDate(dateString) {
     });
 }
 
+// ===== UTILITY FUNCTIONS ADICIONALES =====
+
+/**
+ * Format currency values
+ */
+function formatCurrency(value) {
+    return new Intl.NumberFormat('es-ES', {
+        style: 'currency',
+        currency: 'EUR'
+    }).format(value);
+}
+
+/**
+ * Format percentage values
+ */
+function formatPercentage(value) {
+    return `${(value * 100).toFixed(1)}%`;
+}
+
+/**
+ * Create loading spinner
+ */
+function createLoadingSpinner() {
+    return '<div class="d-flex justify-content-center align-items-center" style="height: 200px;">' +
+           '<div class="spinner-border text-primary" role="status">' +
+           '<span class="sr-only">Cargando...</span>' +
+           '</div></div>';
+}
+
+/**
+ * Show toast notification
+ */
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type} toast-notification`;
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        animation: slideInRight 0.3s ease;
+    `;
+    toast.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center">
+            <span>${message}</span>
+            <button type="button" class="close" onclick="this.parentElement.parentElement.remove()">
+                <span>&times;</span>
+            </button>
+        </div>
+    `;
+    document.body.appendChild(toast);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 5000);
+}
+
+/**
+ * Modal management functions
+ */
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+/**
+ * Form validation helper
+ */
+function validateForm(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return false;
+    
+    const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            input.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            input.classList.remove('is-invalid');
+        }
+    });
+    
+    return isValid;
+}
+
+/**
+ * Debounce function for search inputs
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+/**
+ * Generate random color for charts
+ */
+function generateRandomColor() {
+    const colors = [
+        '#007bff', '#28a745', '#ffc107', '#dc3545', '#17a2b8',
+        '#6f42c1', '#e83e8c', '#fd7e14', '#20c997', '#6c757d'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+/**
+ * Export table data to CSV
+ */
+function exportTableToCSV(tableId, filename) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const csv = rows.map(row => {
+        const cells = Array.from(row.querySelectorAll('th, td'));
+        return cells.map(cell => `"${cell.textContent.trim()}"`).join(',');
+    }).join('\n');
+    
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${filename}.csv`;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 // Limpiar recursos al cerrar la página
 window.addEventListener('beforeunload', function() {
     stopAutoRefresh();

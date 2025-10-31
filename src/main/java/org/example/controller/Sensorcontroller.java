@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -51,6 +52,27 @@ public class SensorController {
 	@GetMapping("/byState")
 	public ResponseEntity<List<Sensor>> byState(@RequestParam String state) {
 		return ResponseEntity.ok(service.obtenerPorEstado(state));
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<List<Sensor>> search(@RequestParam String query) {
+		List<Sensor> results = service.listarTodos().stream()
+			.filter(s -> s.getNombre().toLowerCase().contains(query.toLowerCase()) ||
+						 s.getUbicacion().toLowerCase().contains(query.toLowerCase()) ||
+						 s.getDescripcion().toLowerCase().contains(query.toLowerCase()))
+			.toList();
+		return ResponseEntity.ok(results);
+	}
+
+	@GetMapping("/stats")
+	public ResponseEntity<?> getStats() {
+		List<Sensor> sensors = service.listarTodos();
+		return ResponseEntity.ok(Map.of(
+			"total", sensors.size(),
+			"activos", sensors.stream().filter(s -> "ACTIVO".equals(s.getEstado())).count(),
+			"inactivos", sensors.stream().filter(s -> "INACTIVO".equals(s.getEstado())).count(),
+			"mantenimiento", sensors.stream().filter(s -> "MANTENIMIENTO".equals(s.getEstado())).count()
+		));
 	}
 
 	@PutMapping("/{id}")
