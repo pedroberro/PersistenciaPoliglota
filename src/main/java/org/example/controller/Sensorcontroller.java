@@ -57,10 +57,11 @@ public class SensorController {
 	@GetMapping("/search")
 	public ResponseEntity<List<Sensor>> search(@RequestParam String query) {
 		List<Sensor> results = service.listarTodos().stream()
-			.filter(s -> s.getNombre().toLowerCase().contains(query.toLowerCase()) ||
-						 s.getUbicacion().toLowerCase().contains(query.toLowerCase()) ||
-						 s.getDescripcion().toLowerCase().contains(query.toLowerCase()))
-			.toList();
+				.filter(s -> s.getNombre().toLowerCase().contains(query.toLowerCase()) ||
+						s.getCiudad().toLowerCase().contains(query.toLowerCase()) ||
+						s.getPais().toLowerCase().contains(query.toLowerCase()) ||
+						s.getTipo().toLowerCase().contains(query.toLowerCase()))
+				.toList();
 		return ResponseEntity.ok(results);
 	}
 
@@ -68,11 +69,10 @@ public class SensorController {
 	public ResponseEntity<?> getStats() {
 		List<Sensor> sensors = service.listarTodos();
 		return ResponseEntity.ok(Map.of(
-			"total", sensors.size(),
-			"activos", sensors.stream().filter(s -> "ACTIVO".equals(s.getEstado())).count(),
-			"inactivos", sensors.stream().filter(s -> "INACTIVO".equals(s.getEstado())).count(),
-			"mantenimiento", sensors.stream().filter(s -> "MANTENIMIENTO".equals(s.getEstado())).count()
-		));
+				"total", sensors.size(),
+				"activos", sensors.stream().filter(s -> "ACTIVO".equals(s.getEstado())).count(),
+				"inactivos", sensors.stream().filter(s -> "INACTIVO".equals(s.getEstado())).count(),
+				"mantenimiento", sensors.stream().filter(s -> "MANTENIMIENTO".equals(s.getEstado())).count()));
 	}
 
 	@PutMapping("/{id}")
@@ -91,4 +91,3 @@ public class SensorController {
 		return ResponseEntity.ok("Sensor eliminado correctamente");
 	}
 }
-
