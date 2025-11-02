@@ -12,7 +12,8 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import java.time.Duration;
 
 /**
- * Redis configuration. Uses existing RedisConnectionFactory (Spring Boot auto-config).
+ * Redis configuration. Uses existing RedisConnectionFactory (Spring Boot
+ * auto-config).
  */
 @Configuration
 public class RedisConfig {
@@ -32,12 +33,15 @@ public class RedisConfig {
 	@Bean
 	public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
 		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-			.entryTtl(Duration.ofMinutes(10))
-			.serializeKeysWith(org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-			.serializeValuesWith(org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-		
+				.entryTtl(Duration.ofMinutes(10))
+				.serializeKeysWith(org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair
+						.fromSerializer(new StringRedisSerializer()))
+				.serializeValuesWith(
+						org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair
+								.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
 		return RedisCacheManager.builder(connectionFactory)
-			.cacheDefaults(config)
-			.build();
+				.cacheDefaults(config)
+				.build();
 	}
 }

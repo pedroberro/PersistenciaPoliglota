@@ -21,7 +21,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableJpaRepositories(basePackages = "org.example.repository.postgres")
 @EnableMongoRepositories(basePackages = "org.example.repository.mongodb")
 public class Main {
-    
+
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }

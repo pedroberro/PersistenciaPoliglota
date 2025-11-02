@@ -26,16 +26,29 @@ public class DataSimulationService {
     @Scheduled(fixedRate = 30000) // Cada 30 segundos
     public void generateMeasurements() {
         List<Sensor> activeSensors = sensorRepository.findAll().stream()
-            .filter(s -> "activo".equalsIgnoreCase(s.getEstado()))
-            .toList();
+                .filter(s -> "activo".equalsIgnoreCase(s.getEstado()))
+                .toList();
 
         for (Sensor sensor : activeSensors) {
             Medicion medicion = new Medicion();
             medicion.setSensorId(sensor.getId());
-            medicion.setValor(generateRandomValue(sensor.getTipo()));
             medicion.setTimestamp(Instant.now());
-            medicion.setUnidad(getUnitForType(sensor.getTipo()));
-            
+
+            // Asignar valores según el tipo de sensor
+            Double value = generateRandomValue(sensor.getTipo());
+            switch (sensor.getTipo().toLowerCase()) {
+                case "temperature" -> medicion.setTemperature(value);
+                case "humidity" -> medicion.setHumidity(value);
+                default -> {
+                    // Para otros tipos, usar metadata
+                    if (medicion.getMetadata() == null) {
+                        medicion.setMetadata(new java.util.HashMap<>());
+                    }
+                    medicion.getMetadata().put("value", value);
+                    medicion.getMetadata().put("unit", getUnitForType(sensor.getTipo()));
+                }
+            }
+
             medicionRepository.save(medicion);
         }
     }

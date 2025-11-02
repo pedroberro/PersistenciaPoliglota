@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - PersistenciaPoliglota</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a th:href="@{/}" class="navbar-brand">
+                <i class="fas fa-database"></i> PersistenciaPoliglota
+            </a>
+            <ul class="navbar-nav">
+                <li><a th:href="@{/}" class="nav-link">
+                    <i class="fas fa-home"></i> Dashboard
+                </a></li>
+                <li><a th:href="@{/sensores}" class="nav-link">
+                    <i class="fas fa-microchip"></i> Sensores
+                </a></li>
+                <li><a th:href="@{/reportes}" class="nav-link active">
+                    <i class="fas fa-chart-bar"></i> Reportes
+                </a></li>
+                <li><a th:href="@{/facturacion}" class="nav-link">
+                    <i class="fas fa-file-invoice-dollar"></i> Facturación
+                </a></li>
+                <li><a th:href="@{/health}" class="nav-link">
+                    <i class="fas fa-heartbeat"></i> Estado
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-chart-bar"></i> Reportes y Estadísticas</h1>
+            <p>Análisis de datos y tendencias del sistema de monitoreo</p>
+        </div>
+
+        <!-- Report Controls -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-filter"></i> Filtros de Reporte
+            </div>
+            <div class="card-body">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Período:</label>
+                        <select id="reportPeriod" class="form-control">
+                            <option value="today">Hoy</option>
+                            <option value="week">Esta Semana</option>
+                            <option value="month" selected>Este Mes</option>
+                            <option value="quarter">Este Trimestre</option>
+                            <option value="year">Este Año</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Sensor:</label>
+                        <select id="sensorTypeFilter" class="form-control">
+                            <option value="all">Todos</option>
+                            <option value="temperatura">Temperatura</option>
+                            <option value="humedad">Humedad</option>
+                            <option value="presion">Presión</option>
+                            <option value="luz">Luz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estado:</label>
+                        <select id="statusFilter" class="form-control">
+                            <option value="all">Todos</option>
+                            <option value="activo">Activos</option>
+                            <option value="inactivo">Inactivos</option>
+                            <option value="falla">Con Falla</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary" onclick="generateReport()" style="width: 100%;">
+                            <i class="fas fa-chart-line"></i> Generar Reporte
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Overview -->
+        <div class="dashboard-grid">
+            <div class="stats-card">
+                <div class="stats-number" id="totalMeasurements">
+                    <div class="spinner"></div>
+                </div>
+                <div class="stats-label">
+                    <i class="fas fa-chart-line"></i> Total Mediciones
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-number" id="avgTemperature">
+                    <div class="spinner"></div>
+                </div>
+                <div class="stats-label">
+                    <i class="fas fa-thermometer-half"></i> Temp. Promedio
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-number" id="avgHumidity">
+                    <div class="spinner"></div>
+                </div>
+                <div class="stats-label">
+                    <i class="fas fa-tint"></i> Humedad Promedio
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-number" id="alertsGenerated">
+                    <div class="spinner"></div>
+                </div>
+                <div class="stats-label">
+                    <i class="fas fa-exclamation-triangle"></i> Alertas Generadas
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i> Tendencias de Temperatura
+                </div>
+                <div class="card-body">
+                    <canvas id="temperatureChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-area"></i> Distribución de Sensores
+                </div>
+                <div class="card-body">
+                    <canvas id="sensorDistributionChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i> Mediciones por Hora
+                </div>
+                <div class="card-body">
+                    <canvas id="hourlyMeasurementsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i> Estado de Sensores
+                </div>
+                <div class="card-body">
+                    <canvas id="sensorStatusChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-table"></i> Datos Detallados
+                <div style="float: right;">
+                    <button class="btn btn-success btn-sm" onclick="exportToCSV()">
+                        <i class="fas fa-download"></i> Exportar CSV
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i> Exportar PDF
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="measurementsTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha/Hora</th>
+                                <th>Sensor</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Unidad</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="measurementsTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">
+                                    <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                                    <p>Cargando datos de mediciones...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Summary -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-clipboard-list"></i> Resumen del Reporte
+            </div>
+            <div class="card-body" id="reportSummary">
+                <p>Selecciona los filtros y genera un reporte para ver el resumen detallado.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="margin-top: 3rem; padding: 2rem 0; background-color: var(--dark-color); color: white; text-align: center;">
+        <div class="container">
+            <p>&copy; 2025 PersistenciaPoliglota - Reportes de Análisis de Datos</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/reportes.js}"></script>
+</body>
+</html>
