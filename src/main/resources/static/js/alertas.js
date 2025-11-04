@@ -1,5 +1,5 @@
 // alertas.js
-// -----------------------------------------------
+
 // Controlador de la vista de Alertas
 // - Carga y muestra todas las alertas del sistema.
 // - Filtra por tipo y estado.
@@ -8,7 +8,6 @@
 
 // Cumple el requisito de "control y emisión de alertas"
 // del enunciado del trabajo práctico.
-// -----------------------------------------------
 
 
 

@@ -1,5 +1,15 @@
+<!--
+  
+  Gestión de sensores: altas/ediciones, estado (activo/inactivo/falla), estadísticas
+  y detalle con umbrales (temperatura/humedad) + heartbeat para disparar alertas.
+  Incluye botón "Ver en mapa" para la vista geográfica (opcional).
+
+  Cumple con el enunciado:
+  Los datos de los sensores y sus mediciones."
+  El control del funcionamiento de los sensores y la emisión de alertas..."
+-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,39 +55,20 @@
         <!-- Statistics Cards -->
         <div class="dashboard-grid">
             <div class="stats-card">
-                <div class="stats-number" id="totalSensorsCount">
-                    <div class="spinner"></div>
-                </div>
-                <div class="stats-label">
-                    <i class="fas fa-microchip"></i> Total Sensores
-                </div>
+                <div class="stats-number" id="totalSensorsCount"><div class="spinner"></div></div>
+                <div class="stats-label"><i class="fas fa-microchip"></i> Total Sensores</div>
             </div>
-
             <div class="stats-card">
-                <div class="stats-number" id="activeSensorsCount">
-                    <div class="spinner"></div>
-                </div>
-                <div class="stats-label">
-                    <i class="fas fa-check-circle"></i> Sensores Activos
-                </div>
+                <div class="stats-number" id="activeSensorsCount"><div class="spinner"></div></div>
+                <div class="stats-label"><i class="fas fa-check-circle"></i> Sensores Activos</div>
             </div>
-
             <div class="stats-card">
-                <div class="stats-number" id="inactiveSensorsCount">
-                    <div class="spinner"></div>
-                </div>
-                <div class="stats-label">
-                    <i class="fas fa-pause-circle"></i> Sensores Inactivos
-                </div>
+                <div class="stats-number" id="inactiveSensorsCount"><div class="spinner"></div></div>
+                <div class="stats-label"><i class="fas fa-pause-circle"></i> Sensores Inactivos</div>
             </div>
-
             <div class="stats-card">
-                <div class="stats-number" id="failedSensorsCount">
-                    <div class="spinner"></div>
-                </div>
-                <div class="stats-label">
-                    <i class="fas fa-exclamation-triangle"></i> Sensores con Falla
-                </div>
+                <div class="stats-number" id="failedSensorsCount"><div class="spinner"></div></div>
+                <div class="stats-label"><i class="fas fa-exclamation-triangle"></i> Sensores con Falla</div>
             </div>
         </div>
 
@@ -97,6 +88,10 @@
                     <button class="btn btn-warning" onclick="startDataSimulation()">
                         <i class="fas fa-play"></i> Simular Datos
                     </button>
+                    <!-- 🌍 Acceso rápido al mapa (opcional si creás /sensores/mapa) -->
+                    <a class="btn btn-info" th:href="@{/sensores/mapa}">
+                        <i class="fas fa-globe-americas"></i> Ver mapa
+                    </a>
                     <div style="margin-left: auto;">
                         <input type="text" id="searchSensors" placeholder="Buscar sensores..." 
                                style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
@@ -146,7 +141,39 @@
                 </button>
             </div>
             <div class="card-body" id="sensorDetailsContent">
-                <!-- Contenido dinámico -->
+                <!-- Contenido dinámico (se completa desde sensores.js) -->
+            </div>
+
+            <!-- 🛎️ Umbrales y heartbeat (cumple 'emisión de alertas') -->
+            <div class="card-body" id="sensorThresholds" style="display:none; border-top:1px solid #eee;">
+                <h4 style="margin-bottom:.75rem;"><i class="fas fa-sliders-h"></i> Umbrales</h4>
+                <form id="thresholdsForm" class="grid" style="grid-template-columns: repeat(3,1fr); gap:.75rem;">
+                    <div>
+                        <label class="form-label">Temp. mín (°C)</label>
+                        <input id="tMin" class="form-control" type="number" step="0.1" placeholder="Ej: 10">
+                    </div>
+                    <div>
+                        <label class="form-label">Temp. máx (°C)</label>
+                        <input id="tMax" class="form-control" type="number" step="0.1" placeholder="Ej: 35">
+                    </div>
+                    <div>
+                        <label class="form-label">Heartbeat (min)</label>
+                        <input id="hbMinutes" class="form-control" type="number" min="1" placeholder="Ej: 15">
+                    </div>
+                    <div>
+                        <label class="form-label">Hum. mín (%)</label>
+                        <input id="hMin" class="form-control" type="number" min="0" max="100" placeholder="Ej: 30">
+                    </div>
+                    <div>
+                        <label class="form-label">Hum. máx (%)</label>
+                        <input id="hMax" class="form-control" type="number" min="0" max="100" placeholder="Ej: 80">
+                    </div>
+                    <div style="align-self:end">
+                        <button class="btn btn-primary" id="saveThresholds"><i class="fas fa-save"></i> Guardar</button>
+                        <button class="btn btn-secondary" id="testHeartbeat" type="button"><i class="fas fa-stethoscope"></i> Probar sensor</button>
+                    </div>
+                </form>
+                <small class="muted">Las alertas se disparan si las lecturas superan los umbrales o si el sensor no reporta dentro del tiempo configurado.</small>
             </div>
         </div>
     </main>
