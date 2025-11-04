@@ -1,0 +1,70 @@
+<!--
+  
+  Interfaz para visualizar y gestionar las alertas generadas por los sensores.
+  Permite filtrar por tipo (sensor / climática) y estado (activa / resuelta),
+  así como resolver manualmente alertas activas.
+
+  Cumple con el punto del enunciado:
+  "El control del funcionamiento de los sensores y la emisión de alertas
+  tanto de funcionamiento de estos como de situaciones climáticas."
+-->
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alertas</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a th:href="@{/}" class="navbar-brand"><i class="fas fa-database"></i> PersistenciaPoliglota</a>
+      <ul class="nav-links">
+        <li><a th:href="@{/}">Dashboard</a></li>
+        <li><a th:href="@{/sensores}">Sensores</a></li>
+        <li><a th:href="@{/reportes}">Reportes</a></li>
+        <li><a th:href="@{/facturacion}">Facturación</a></li>
+        <li><a class="active" th:href="@{/alertas}">Alertas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top:2rem">
+    <div class="toolbar" style="display:flex; gap:.5rem; margin-bottom:1rem;">
+      <select id="alertType" class="form-control" style="max-width:220px;">
+        <option value="">Todos los tipos</option>
+        <option value="sensor">Sensor</option>
+        <option value="climatica">Climática</option>
+      </select>
+      <select id="alertStatus" class="form-control" style="max-width:220px;">
+        <option value="">Todos los estados</option>
+        <option value="activa">Activa</option>
+        <option value="resuelta">Resuelta</option>
+      </select>
+      <button class="btn btn-secondary" id="refreshAlerts"><i class="fas fa-rotate"></i> Actualizar</button>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><i class="fas fa-bell"></i> Alertas</div>
+      <div class="card-body table-responsive">
+        <table class="table">
+          <thead>
+            <tr><th>Tipo</th><th>Sensor</th><th>Fecha</th><th>Descripción</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="alertsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/js/main.js}"></script>
+  <script th:src="@{/js/alertas.js}"></script>
+</body>
+</html>
