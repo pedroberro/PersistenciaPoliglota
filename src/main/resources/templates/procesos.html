@@ -1,97 +1,51 @@
-<!--
-  
-  Interfaz que lista todos los procesos o servicios disponibles para los usuarios
-  y muestra las solicitudes realizadas (pendientes o completadas).
-
-  Permite crear una nueva solicitud de proceso y enviar parámetros
-  personalizados en formato JSON.
-
-  Cumple con los puntos del enunciado:
-  - "La generación de los procesos, servicios y reportes solicitados por los usuarios."
-  - "El control y registración de los procesos, servicios y reportes emitidos y por emitirse."
+<!-- Procesos (simple)
+Muestra catálogo con Tipo de proceso y permite solicitar.
+Debajo lista "Mis solicitudes" con estado.
+Cumple: "Generación de procesos/servicios/reportes" y "Control de solicitudes".
 -->
-
-
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Procesos & Solicitudes</title>
-  <link rel="stylesheet" th:href="@{/css/main.css}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <meta charset="utf-8">
+  <title>Procesos</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <a th:href="@{/}" class="navbar-brand"><i class="fas fa-database"></i> PersistenciaPoliglota</a>
-      <ul class="nav-links">
-        <li><a th:href="@{/}">Dashboard</a></li>
-        <li><a th:href="@{/sensores}">Sensores</a></li>
-        <li><a th:href="@{/reportes}">Reportes</a></li>
-        <li><a th:href="@{/facturacion}">Facturación</a></li>
-        <li><a class="active" th:href="@{/procesos}">Procesos</a></li>
-      </ul>
-    </div>
-  </nav>
+  <h1>Procesos</h1>
 
-  <div class="container" style="margin-top:2rem">
-    <div class="toolbar" style="display:flex; gap:.5rem; margin-bottom:1rem;">
-      <button class="btn btn-primary" onclick="openNewRequestModal()"><i class="fas fa-plus"></i> Nueva solicitud</button>
-      <select id="userRequestsFilter" class="form-control" style="max-width:230px;">
-        <option value="">Todas las solicitudes</option>
-        <option value="pending">Pendientes</option>
-        <option value="completed">Completadas</option>
-      </select>
-    </div>
-
-    <div class="grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
-      <div class="card">
-        <div class="card-header"><i class="fas fa-cogs"></i> Procesos disponibles</div>
-        <div class="card-body table-responsive">
-          <table class="table">
-            <thead><tr><th>Nombre</th><th>Descripción</th><th>Tipo</th><th>Costo</th><th></th></tr></thead>
-            <tbody id="processesTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><i class="fas fa-list-check"></i> Solicitudes del usuario</div>
-        <div class="card-body table-responsive">
-          <table class="table">
-            <thead><tr><th>ID</th><th>Proceso</th><th>Fecha</th><th>Estado</th><th></th></tr></thead>
-            <tbody id="requestsTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+  <!-- Filtro por tipo -->
+  <div style="margin:8px 0;">
+    <label>Tipo:</label>
+    <select id="procTypeFilter">
+      <option value="">Todos</option>
+      <option value="Reporte">Reporte</option>
+      <option value="Batch">Batch</option>
+      <option value="ETL">ETL</option>
+    </select>
   </div>
 
-  <div class="modal" id="newRequestModal" style="display:none;">
-    <div class="modal-content">
-      <div class="modal-header"><h3>Nueva solicitud</h3></div>
-      <div class="modal-body">
-        <form id="newRequestForm">
-          <div class="form-group">
-            <label>Proceso</label>
-            <select id="requestProcessId" class="form-control" required></select>
-          </div>
-          <div class="form-group">
-            <label>Parámetros (JSON)</label>
-            <textarea id="requestParams" class="form-control" rows="4" placeholder='{"city":"Buenos Aires","from":"2025-10-01","to":"2025-10-31"}'></textarea>
-          </div>
-          <div class="form-actions" style="display:flex; gap:.5rem; justify-content:flex-end;">
-            <button type="button" class="btn btn-secondary" onclick="closeNewRequestModal()">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Crear</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <h3>Catálogo</h3>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th><th>Nombre</th><th>Descripción</th><th>Tipo</th><th>Costo</th><th>Acción</th>
+      </tr>
+    </thead>
+    <tbody id="procBody">
+      <tr><td colspan="6" style="text-align:center;">Cargando…</td></tr>
+    </tbody>
+  </table>
 
-  <script th:src="@{/js/main.js}"></script>
+  <h3 style="margin-top:14px;">Mis solicitudes</h3>
+  <table border="1" width="100%">
+    <thead>
+      <tr><th>ID</th><th>Proceso</th><th>Fecha</th><th>Estado</th></tr>
+    </thead>
+    <tbody id="reqBody">
+      <tr><td colspan="4" style="text-align:center;">Cargando…</td></tr>
+    </tbody>
+  </table>
+
   <script th:src="@{/js/procesos.js}"></script>
 </body>
 </html>

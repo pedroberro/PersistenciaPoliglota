@@ -1,107 +1,92 @@
+// Procesos (simple, con filtro por tipo)
+// Endpoints esperados:
+// GET /api/processes -> [{id,name,description,type,cost}]
+// POST /api/process-requests {processId}
+// GET /api/process-requests?mine=true
 
-// - Obtiene la lista de procesos disponibles desde la API.
-// - Permite crear una nueva solicitud asociada a un proceso.
-// - Lista las solicitudes realizadas por el usuario con su estado actual.
-// - Filtra las solicitudes por estado (pendiente / completada).
-//
-// Cumple con la parte del enunciado relacionada a la
-// "gestión de procesos, servicios y solicitudes de los usuarios".
-// -----------------------------------------------
-
-let processes = [];
-let myRequests = [];
+let allProcesses = [];
 
 document.addEventListener('DOMContentLoaded', ()=>{
-  bind();
+  document.getElementById('procTypeFilter')?.addEventListener('change', renderProcesses);
   loadProcesses();
-  loadRequests();
+  loadMyRequests();
 });
 
-function bind(){
-  document.getElementById('userRequestsFilter')?.addEventListener('change', loadRequests);
-  document.getElementById('newRequestForm')?.addEventListener('submit', submitRequest);
-}
-
 async function loadProcesses(){
-  const tbody = document.getElementById('processesTableBody');
-  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem"><div class="spinner"></div></td></tr>';
+  const body = document.getElementById('procBody');
+  body.innerHTML = `<tr><td colspan="6" style="text-align:center;">Cargando…</td></tr>`;
   try{
-    const res = await fetch('/api/processes');
-    if (!res.ok) throw new Error(await res.text());
-    processes = await res.json();
-    const sel = document.getElementById('requestProcessId');
-    if (sel){
-      sel.innerHTML = processes.map(p => `<option value="${p.id}">${p.name} — $${p.cost?.toLocaleString?.()||p.costo||''}</option>`).join('');
-    }
-    tbody.innerHTML = processes.map(p => `
-      <tr>
-        <td>${p.name}</td>
-        <td>${p.description||''}</td>
-        <td>${p.type||p.tipo||''}</td>
-        <td>$${(p.cost ?? p.costo ?? 0).toLocaleString()}</td>
-        <td><button class="btn btn-sm btn-primary" onclick="openNewRequestModal(${p.id})"><i class="fas fa-play"></i> Solicitar</button></td>
-      </tr>`).join('');
-  }catch(e){
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem">Error cargando procesos</td></tr>';
+    const r = await fetch('/api/processes');
+    allProcesses = r.ok ? await r.json() : [];
+    renderProcesses();
+  }catch{
+    body.innerHTML = `<tr><td colspan="6" style="text-align:center;">Error</td></tr>`;
   }
 }
 
-async function loadRequests(){
-  const status = document.getElementById('userRequestsFilter')?.value || '';
-  const params = new URLSearchParams();
-  if (status) params.set('status', status);
-  const tbody = document.getElementById('requestsTableBody');
-  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem"><div class="spinner"></div></td></tr>';
+function renderProcesses(){
+  const body = document.getElementById('procBody');
+  if (!allProcesses.length){
+    body.innerHTML = `<tr><td colspan="6" style="text-align:center;">Sin procesos</td></tr>`;
+    return;
+  }
+  const sel = (document.getElementById('procTypeFilter')?.value || '').toLowerCase();
+  const items = sel ? allProcesses.filter(p => (p.type||p.tipo||'').toLowerCase() === sel) : allProcesses;
+
+  if (!items.length){
+    body.innerHTML = `<tr><td colspan="6" style="text-align:center;">Sin resultados</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = items.map(p => `
+    <tr>
+      <td>${p.id}</td>
+      <td>${esc(p.name||'')}</td>
+      <td>${esc(p.description||'')}</td>
+      <td>${esc(p.type || p.tipo || '')}</td>
+      <td>${money(p.cost)}</td>
+      <td><button onclick="requestProcess(${p.id})">Solicitar</button></td>
+    </tr>
+  `).join('');
+}
+
+async function loadMyRequests(){
+  const body = document.getElementById('reqBody');
+  body.innerHTML = `<tr><td colspan="4" style="text-align:center;">Cargando…</td></tr>`;
   try{
-    const res = await fetch('/api/requests?'+params.toString());
-    if (!res.ok) throw new Error(await res.text());
-    myRequests = await res.json();
-    if (!Array.isArray(myRequests) || myRequests.length===0){
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem">Sin solicitudes</td></tr>';
+    const r = await fetch('/api/process-requests?mine=true');
+    const items = r.ok ? await r.json() : [];
+    if (!items.length){
+      body.innerHTML = `<tr><td colspan="4" style="text-align:center;">Sin solicitudes</td></tr>`;
       return;
     }
-    tbody.innerHTML = myRequests.map(r => `
+    body.innerHTML = items.map(s => `
       <tr>
-        <td>${r.id}</td>
-        <td>${r.proceso?.name || r.procesoNombre || r.procesoId}</td>
-        <td>${(r.fechaSolicitud || r.createdAt || '').toString().replace('T',' ').replace('Z','')}</td>
-        <td><span class="badge ${r.estado==='pending'?'badge-warning':'badge-success'}">${r.estado||r.status}</span></td>
-        <td><button class="btn btn-sm btn-secondary" onclick="viewRequest(${r.id})"><i class="fas fa-eye"></i> Ver</button></td>
-      </tr>`).join('');
-  }catch(e){
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem">Error cargando solicitudes</td></tr>';
+        <td>${s.id}</td>
+        <td>${esc(s.processName||s.processId)}</td>
+        <td>${fmt(s.requestedAt||s.fechaSolicitud)}</td>
+        <td>${esc(s.status||'pendiente')}</td>
+      </tr>
+    `).join('');
+  }catch{
+    body.innerHTML = `<tr><td colspan="4" style="text-align:center;">Error</td></tr>`;
   }
 }
 
-function openNewRequestModal(pId){
-  const modal = document.getElementById('newRequestModal');
-  modal.style.display = 'block';
-  if (pId){
-    const sel = document.getElementById('requestProcessId');
-    if (sel) sel.value = String(pId);
-  }
-}
-function closeNewRequestModal(){ document.getElementById('newRequestModal').style.display = 'none'; }
-
-async function submitRequest(e){
-  e.preventDefault();
-  const procesoId = parseInt(document.getElementById('requestProcessId').value);
-  let params;
-  try{ params = JSON.parse(document.getElementById('requestParams').value || '{}'); }
-  catch(err){ alert('Parámetros JSON inválidos'); return; }
+async function requestProcess(processId){
+  if(!confirm('¿Solicitar este proceso?')) return;
   try{
-    const res = await fetch('/api/requests', {
+    const r = await fetch('/api/process-requests',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ procesoId, params })
+      body: JSON.stringify({processId})
     });
-    if (!res.ok) throw new Error(await res.text());
-    closeNewRequestModal();
-    loadRequests();
-  }catch(e){
-    alert('No se pudo crear la solicitud');
-  }
+    if(!r.ok) throw 0;
+    loadMyRequests();
+    alert('Solicitud creada');
+  }catch{ alert('No se pudo solicitar'); }
 }
 
-async function viewRequest(id){
-  window.location.href = '/reportes?requestId='+id;
-}
+// utils simples
+function money(v){ return v==null?'-': new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(v); }
+function fmt(s){ try{return new Date(s).toLocaleString('es-AR')}catch{return s} }
+function esc(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
