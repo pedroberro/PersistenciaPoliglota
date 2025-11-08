@@ -38,7 +38,7 @@ public class ReportController {
 
         // Datos de ejemplo para los gráficos
         switch (type) {
-            case "temperature":
+            case "temperatura":
                 return ResponseEntity.ok(Map.of(
                         "labels", List.of("Ene", "Feb", "Mar", "Abr", "May", "Jun"),
                         "datasets", List.of(Map.of(
@@ -46,7 +46,7 @@ public class ReportController {
                                 "data", List.of(18, 20, 22, 25, 28, 30),
                                 "backgroundColor", "rgba(54, 162, 235, 0.2)",
                                 "borderColor", "rgba(54, 162, 235, 1)"))));
-            case "humidity":
+            case "humedad":
                 return ResponseEntity.ok(Map.of(
                         "labels", List.of("Ene", "Feb", "Mar", "Abr", "May", "Jun"),
                         "datasets", List.of(Map.of(
@@ -54,7 +54,7 @@ public class ReportController {
                                 "data", List.of(65, 68, 70, 72, 75, 78),
                                 "backgroundColor", "rgba(255, 99, 132, 0.2)",
                                 "borderColor", "rgba(255, 99, 132, 1)"))));
-            case "sensors":
+            case "sensores":
                 return ResponseEntity.ok(Map.of(
                         "labels", List.of("Activos", "Inactivos", "Mantenimiento"),
                         "datasets", List.of(Map.of(
