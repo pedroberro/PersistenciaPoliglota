@@ -10,12 +10,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
+
     private final ReporteService reporteService;
 
     public ReportController(ReporteService reporteService) {
         this.reporteService = reporteService;
     }
 
+    // Endpoint para generar el reporte de temperatura
     @GetMapping("/temperature")
     public ResponseEntity<HistorialEjecucion> temperatureReport(
             @RequestParam String city,
@@ -23,14 +25,21 @@ public class ReportController {
             @RequestParam String to,
             @RequestParam Integer requestId) {
 
-        return ResponseEntity.ok(reporteService.runTemperatureReport(city, from, to, requestId));
+        // Llamamos al servicio para generar el reporte de temperatura
+        HistorialEjecucion historialEjecucion = reporteService.runTemperatureReport(city, from, to, requestId);
+
+        // Retornamos el resultado del reporte
+        return ResponseEntity.ok(historialEjecucion);
     }
 
+    // Endpoint para obtener el historial de ejecuciones por ID de usuario
     @GetMapping("/history")
     public ResponseEntity<List<HistorialEjecucion>> history(@RequestParam Integer userId) {
-        return ResponseEntity.ok(reporteService.getHistoryByUser(userId));
+        List<HistorialEjecucion> historial = reporteService.getHistoryByUser(userId);
+        return ResponseEntity.ok(historial);
     }
 
+    // Endpoint para obtener los datos para los gráficos
     @GetMapping("/chart-data")
     public ResponseEntity<?> getChartData(
             @RequestParam String type,
