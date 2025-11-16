@@ -19,20 +19,23 @@ public class FacturacionService {
 
     private final SolicitudProcesoRepository solicitudProcesoRepository;
     private final FacturaRepository facturaRepository;
+    private final CuentaCorrienteServicio cuentaCorrienteServicio;
 
     public FacturacionService(SolicitudProcesoRepository solicitudProcesoRepository,
-                              FacturaRepository facturaRepository) {
+                              FacturaRepository facturaRepository,
+                              CuentaCorrienteServicio cuentaCorrienteServicio) {
         this.solicitudProcesoRepository = solicitudProcesoRepository;
         this.facturaRepository = facturaRepository;
+        this.cuentaCorrienteServicio = cuentaCorrienteServicio;
     }
 
     /**
      * Genera una factura para la solicitud indicada y la persiste.
-     * Devuelve la factura creada.
+     * También registra el DEBITO en la cuenta corriente del usuario.
      */
     @Transactional
     public Factura facturarSolicitud(Integer solicitudId) {
-        // Buscar la solicitud
+        // 1) Buscar la solicitud
         SolicitudProceso solicitud = solicitudProcesoRepository.findById(solicitudId)
                 .orElseThrow(() -> new RuntimeException("Solicitud de proceso no encontrada: " + solicitudId));
 
@@ -45,7 +48,7 @@ public class FacturacionService {
 
         BigDecimal costo = proceso.getCost();
 
-        // Crear la factura
+        // 2) Crear la factura
         Factura factura = new Factura();
         factura.setUserId(usuario.getId());
         factura.setIssuedAt(OffsetDateTime.now());
@@ -63,12 +66,20 @@ public class FacturacionService {
         );
         factura.setLinesJson(linesJson);
 
-        // Guardar factura
+        // 3) Guardar factura
         Factura saved = facturaRepository.save(factura);
 
-        // Actualizar estado de la solicitud (ajustá el texto si usás otro)
+        // 4) Actualizar estado de la solicitud
         solicitud.setStatus("billed");
         solicitudProcesoRepository.save(solicitud);
+
+        // 5) Registrar DEBITO en cuenta corriente del usuario
+        cuentaCorrienteServicio.registrarDebito(
+                usuario.getId(),
+                costo,
+                "Factura por solicitud " + solicitud.getId(),
+                saved.getId().longValue()
+        );
 
         return saved;
     }
