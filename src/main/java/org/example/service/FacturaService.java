@@ -40,4 +40,22 @@ public class FacturaService {
 
         return saved;
     }
+
+    public List<Factura> listAll() {
+        return facturaRepository.findAll();
+    }
+
+    public long countAll() {
+        return facturaRepository.count();
+    }
+
+    public long countByStatus(String status) {
+        return facturaRepository.findAll().stream()
+            .filter(f -> status.equalsIgnoreCase(f.getStatus()))
+            .count();
+    }
+
+    public long countPendingInvoices() {
+        return countByStatus("pendiente");
+    }
 }

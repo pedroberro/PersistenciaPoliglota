@@ -17,12 +17,26 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
         // Skip authentication for public endpoints
         String path = request.getRequestURI();
-        if (path.startsWith("/api/auth/") || 
-            path.startsWith("/actuator/") || 
-            path.equals("/api/dashboard/health")) {
+        if (path.startsWith("/api/auth/") ||
+                path.startsWith("/actuator/") ||
+                path.startsWith("/api/dashboard") ||
+                path.startsWith("/api/sensors") ||
+                path.startsWith("/api/measurements") ||
+                path.startsWith("/api/financial") ||
+                path.startsWith("/api/reports") ||
+                path.startsWith("/css/") ||
+                path.startsWith("/js/") ||
+                path.startsWith("/images/") ||
+                path.equals("/") ||
+                path.equals("/index.html") ||
+                path.equals("/sensores") ||
+                path.equals("/reportes") ||
+                path.equals("/facturacion") ||
+                path.equals("/health")) {
             return true;
         }
 

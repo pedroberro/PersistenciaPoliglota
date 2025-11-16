@@ -4,6 +4,7 @@ import org.example.model.mongodb.Sensor;
 import org.example.model.mongodb.Medicion;
 import org.example.repository.mongodb.SensorRepository;
 import org.example.repository.mongodb.MedicionRepository;
+import org.example.util.SensorTypes;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -34,18 +35,20 @@ public class DataSimulationService {
             medicion.setSensorId(sensor.getId());
             medicion.setTimestamp(Instant.now());
 
-            // Asignar valores según el tipo de sensor
-            Double value = generateRandomValue(sensor.getTipo());
-            switch (sensor.getTipo().toLowerCase()) {
-                case "temperature" -> medicion.setTemperature(value);
-                case "humidity" -> medicion.setHumidity(value);
+            // Asignar valores según el tipo de sensor (normalizado)
+            String normalizedType = SensorTypes.normalize(sensor.getTipo());
+            Double value = generateRandomValue(normalizedType);
+
+            switch (normalizedType) {
+                case SensorTypes.TEMPERATURA -> medicion.setTemperature(value);
+                case SensorTypes.HUMEDAD -> medicion.setHumidity(value);
                 default -> {
                     // Para otros tipos, usar metadata
                     if (medicion.getMetadata() == null) {
                         medicion.setMetadata(new java.util.HashMap<>());
                     }
                     medicion.getMetadata().put("value", value);
-                    medicion.getMetadata().put("unit", getUnitForType(sensor.getTipo()));
+                    medicion.getMetadata().put("unit", SensorTypes.getUnit(normalizedType));
                 }
             }
 
@@ -53,21 +56,10 @@ public class DataSimulationService {
         }
     }
 
-    private Double generateRandomValue(String tipo) {
-        return switch (tipo.toLowerCase()) {
-            case "temperature" -> 15.0 + random.nextDouble() * 25.0; // 15-40°C
-            case "humidity" -> 30.0 + random.nextDouble() * 50.0; // 30-80%
-            case "pressure" -> 1000.0 + random.nextDouble() * 50.0; // 1000-1050 hPa
-            default -> random.nextDouble() * 100.0;
-        };
-    }
-
-    private String getUnitForType(String tipo) {
-        return switch (tipo.toLowerCase()) {
-            case "temperature" -> "°C";
-            case "humidity" -> "%";
-            case "pressure" -> "hPa";
-            default -> "units";
-        };
+    private Double generateRandomValue(String normalizedType) {
+        double[] range = SensorTypes.getValueRange(normalizedType);
+        double min = range[0];
+        double max = range[1];
+        return min + random.nextDouble() * (max - min);
     }
 }

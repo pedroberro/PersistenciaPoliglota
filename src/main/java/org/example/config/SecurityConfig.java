@@ -39,6 +39,7 @@ public class SecurityConfig {
 
                         // Permitir acceso a APIs públicas
                         .requestMatchers("/api/dashboard/**", "/api/sensors/**", "/api/measurements/**").permitAll()
+                        .requestMatchers("/api/reports/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/actuator/health", "/actuator/info").permitAll()
 

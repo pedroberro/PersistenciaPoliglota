@@ -90,4 +90,9 @@ public class SensorController {
 		service.eliminar(id);
 		return ResponseEntity.ok("Sensor eliminado correctamente");
 	}
+
+	@PostMapping("/migrate-types")
+	public ResponseEntity<Map<String, Object>> migrateTypes() {
+		return service.migrateSensorTypes();
+	}
 }

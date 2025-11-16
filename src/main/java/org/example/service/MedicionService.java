@@ -6,7 +6,9 @@ import org.example.model.mongodb.Medicion;
 import org.example.service.AlertaService; // Asegúrate de importar tu servicio de alertas
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @Service
 public class MedicionService {
@@ -30,6 +32,7 @@ public class MedicionService {
         // Llamamos al servicio de alertas para generar alertas si es necesario
         alertaService.generarAlerta(nuevaMedicion);  // Generamos alerta si se supera el umbral
 
+<<<<<<< HEAD
         return nuevaMedicion;
     }
 
@@ -42,4 +45,45 @@ public class MedicionService {
     public long countAll() {
         return repo.count();
     }
+=======
+  public long countAll() {
+    return repo.count();
+  }
+
+  public List<Medicion> getAllMediciones() {
+    return repo.findAll();
+  }
+
+  public List<Medicion> getRecentMediciones(int days) {
+    Instant from = Instant.now().minus(days, ChronoUnit.DAYS);
+    return repo.findAll().stream()
+            .filter(m -> m.getTimestamp() != null && m.getTimestamp().isAfter(from))
+            .toList();
+  }
+
+  public double getAverageTemperature() {
+    List<Medicion> mediciones = repo.findAll();
+    OptionalDouble avg = mediciones.stream()
+            .filter(m -> m.getTemperature() != null)
+            .mapToDouble(Medicion::getTemperature)
+            .average();
+    return avg.orElse(0.0);
+  }
+
+  public double getAverageHumidity() {
+    List<Medicion> mediciones = repo.findAll();
+    OptionalDouble avg = mediciones.stream()
+            .filter(m -> m.getHumidity() != null)
+            .mapToDouble(Medicion::getHumidity)
+            .average();
+    return avg.orElse(0.0);
+  }
+
+  public long countRecentMediciones(int days) {
+    Instant from = Instant.now().minus(days, ChronoUnit.DAYS);
+    return repo.findAll().stream()
+            .filter(m -> m.getTimestamp() != null && m.getTimestamp().isAfter(from))
+            .count();
+  }
+>>>>>>> 4c64cba5554944fea2ee093fcb3594bb7a055514
 }

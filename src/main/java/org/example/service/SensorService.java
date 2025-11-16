@@ -2,10 +2,13 @@ package org.example.service;
 
 import org.example.model.mongodb.Sensor;
 import org.example.repository.mongodb.SensorRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -63,5 +66,39 @@ public class SensorService {
 
     public long countAll() {
         return repo.count();
+    }
+
+    public ResponseEntity<Map<String, Object>> migrateSensorTypes() {
+        try {
+            List<Sensor> allSensors = repo.findAll();
+            int migratedCount = 0;
+
+            for (Sensor sensor : allSensors) {
+                String originalType = sensor.getTipo();
+                String normalizedType = org.example.util.SensorTypes.normalize(originalType);
+
+                if (!originalType.equals(normalizedType)) {
+                    sensor.setTipo(normalizedType);
+                    repo.save(sensor);
+                    migratedCount++;
+                    System.out.println(
+                            "🔄 Migrado sensor " + sensor.getId() + ": " + originalType + " → " + normalizedType);
+                }
+            }
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("totalSensors", allSensors.size());
+            result.put("migratedSensors", migratedCount);
+            result.put("message", "Migración completada exitosamente");
+
+            System.out.println("✅ Migración de tipos de sensores completada: " + migratedCount + " sensores migrados");
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("error", "Error durante la migración: " + e.getMessage());
+            return ResponseEntity.status(500).body(error);
+        }
     }
 }

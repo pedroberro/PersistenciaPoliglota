@@ -546,3 +546,38 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Badges para estados de sensores */
+.badge {
+    display: inline-block;
+    padding: 0.3em 0.6em;
+    font-size: 0.8em;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-success {
+    color: white;
+    background-color: var(--success-color);
+}
+
+.badge-danger {
+    color: white;
+    background-color: var(--danger-color);
+}
+
+.badge-warning {
+    color: var(--dark-color);
+    background-color: var(--warning-color);
+}
+
+.badge-info {
+    color: white;
+    background-color: var(--info-color);
+}
