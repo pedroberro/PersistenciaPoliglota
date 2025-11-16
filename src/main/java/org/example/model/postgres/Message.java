@@ -1,7 +1,9 @@
 package org.example.model.postgres;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.time.OffsetDateTime;
 
@@ -11,29 +13,36 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    // quién envía
+    @Column(name = "sender_id", nullable = false)
+    private Integer senderId;
 
-    @ManyToOne
-    @JoinColumn(name = "recipient_user_id")
-    private User recipientUser;
+    // destinatario usuario (para mensajes privados)
+    @Column(name = "recipient_user_id")
+    private Integer recipientUserId;
 
-    @Column(name = "recipient_group_id")
+    // destinatario grupo (para mensajes grupales)
+    @Column(name = "group_id")
     private Integer recipientGroupId;
 
+    // timestamp en BD: created_at
+    @Column(name = "created_at")
     private OffsetDateTime timestamp;
 
     @Column(columnDefinition = "text")
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private MessageType type;
+    @Column(name = "message_type")
+    private MessageType type; // PRIVATE o GROUP
 
+
+    @Transient
     private Boolean readFlag = false;
 
     public enum MessageType { PRIVATE, GROUP }

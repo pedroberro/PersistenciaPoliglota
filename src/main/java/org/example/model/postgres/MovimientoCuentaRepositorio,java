@@ -1,0 +1,10 @@
+package org.example.repositorio.postgres;
+
+import org.example.modelo.postgres.MovimientoCuenta;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface MovimientoCuentaRepositorio extends JpaRepository<MovimientoCuenta, Long> {
+    List<MovimientoCuenta> findByCuenta_IdOrderByCreadoEnAsc(Long cuentaId);
+}
