@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * and let Spring Boot autoconfigure DataSource and JPA.
  */
 @Configuration
-public class PostrgresConfig {
-	// Minimal placeholder for any custom datasource beans or JPA settings
+public class PostgresConfig {
+    // Minimal placeholder for any custom datasource beans or JPA settings
 }
