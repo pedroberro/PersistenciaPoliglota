@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableCaching
 @EnableAsync
-@EnableJpaRepositories(basePackages = "org.example.repository.postgres")
+@EnableJpaRepositories(basePackages = { "org.example.repository.postgres", "org.example.model.postgres" })
 @EnableMongoRepositories(basePackages = "org.example.repository.mongodb")
 public class Main {
 

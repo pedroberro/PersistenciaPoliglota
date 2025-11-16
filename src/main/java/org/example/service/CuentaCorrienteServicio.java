@@ -1,9 +1,9 @@
 package org.example.service;
 
-
 import org.example.model.postgres.CuentaCorriente;
 import org.example.model.postgres.CuentaCorrienteRepositorio;
 import org.example.model.postgres.MovimientoCuenta;
+import org.example.model.postgres.MovimientoCuentaRepositorio;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,7 @@ public class CuentaCorrienteServicio {
     private final MovimientoCuentaRepositorio movimientoRepo;
 
     public CuentaCorrienteServicio(CuentaCorrienteRepositorio cuentaRepo,
-                                   MovimientoCuentaRepositorio movimientoRepo) {
+            MovimientoCuentaRepositorio movimientoRepo) {
         this.cuentaRepo = cuentaRepo;
         this.movimientoRepo = movimientoRepo;
     }
@@ -30,15 +30,14 @@ public class CuentaCorrienteServicio {
                                 .usuarioId(usuarioId)
                                 .saldo(BigDecimal.ZERO)
                                 .moneda("ARS")
-                                .build()
-                ));
+                                .build()));
     }
 
     @Transactional
     public MovimientoCuenta registrarDebito(Integer usuarioId,
-                                            BigDecimal monto,
-                                            String descripcion,
-                                            Long facturaId) {
+            BigDecimal monto,
+            String descripcion,
+            Long facturaId) {
 
         CuentaCorriente cuenta = obtenerOCrearCuenta(usuarioId);
         cuenta.setSaldo(cuenta.getSaldo().subtract(monto));
@@ -57,9 +56,9 @@ public class CuentaCorrienteServicio {
 
     @Transactional
     public MovimientoCuenta registrarCredito(Integer usuarioId,
-                                             BigDecimal monto,
-                                             String descripcion,
-                                             Long pagoId) {
+            BigDecimal monto,
+            String descripcion,
+            Long pagoId) {
 
         CuentaCorriente cuenta = obtenerOCrearCuenta(usuarioId);
         cuenta.setSaldo(cuenta.getSaldo().add(monto));
