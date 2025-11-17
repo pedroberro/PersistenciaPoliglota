@@ -9,16 +9,17 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * Aplicación principal de PersistenciaPoliglota
- * 
- * Demuestra el uso de múltiples bases de datos:
- * - PostgreSQL para datos relacionales (usuarios, procesos, facturación)
+ *
+ * - PostgreSQL para datos relacionales
  * - MongoDB para datos de sensores y mediciones
  * - Redis para cache y sesiones
  */
 @SpringBootApplication
 @EnableCaching
 @EnableAsync
-@EnableJpaRepositories(basePackages = "org.example.repository.postgres")
+// Los repositorios JPA están en org.example.model.postgres (no en repository.postgres)
+@EnableJpaRepositories(basePackages = "org.example.model.postgres")
+// Los repositorios Mongo sí están en org.example.repository.mongodb
 @EnableMongoRepositories(basePackages = "org.example.repository.mongodb")
 public class Main {
 
