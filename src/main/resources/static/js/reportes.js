@@ -1,4 +1,4 @@
-// reportes.js - JavaScript específico para la página de reportes
+
 
 // Variables globales para gráficos
 let temperatureChart = null;
@@ -15,7 +15,7 @@ let reportData = {
 
 // Inicialización cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('📊 Módulo de reportes iniciado');
+    console.log('Módulo de reportes iniciado');
     
     loadReportData();
     initializeCharts();
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Cargar datos para reportes
 async function loadReportData() {
-    console.log('📈 Cargando datos para reportes...');
+    console.log(' Cargando datos para reportes...');
     
     try {
         // Cargar estadísticas básicas
@@ -40,7 +40,7 @@ async function loadReportData() {
         await loadMeasurementsTable();
         
     } catch (error) {
-        console.error('❌ Error cargando datos de reportes:', error);
+        console.error('Error cargando datos de reportes:', error);
         showError('Error cargando datos de reportes');
     }
 }
@@ -48,7 +48,7 @@ async function loadReportData() {
 // Cargar estadísticas básicas
 async function loadStatistics() {
     try {
-        console.log('� Cargando estadísticas desde API...');
+        console.log('Cargando estadísticas desde API...');
         
         const response = await fetch('/api/reports/stats');
         
@@ -57,7 +57,7 @@ async function loadStatistics() {
         }
         
         const data = await response.json();
-        console.log('✅ Datos cargados desde API:', data);
+        console.log('Datos cargados desde API:', data);
         
         // Actualizar estadísticas con datos reales del API
         updateStatNumber('total-mediciones', data.totalMeasurements || 0);
@@ -69,10 +69,10 @@ async function loadStatistics() {
         updateStatNumber('facturas-pendientes', data.pendingInvoices || 0);
         updateStatNumber('sensores-fallidos', data.failedSensors || 0);
         
-        console.log('✅ Estadísticas de reportes actualizadas desde API');
+        console.log('Estadísticas de reportes actualizadas desde API');
         
     } catch (error) {
-        console.error('❌ Error cargando estadísticas:', error);
+        console.error('Error cargando estadísticas:', error);
         
         // Usar datos simulados como respaldo en caso de error
         console.log('🔧 Usando datos de respaldo...');
@@ -101,7 +101,7 @@ async function loadStatistics() {
 // Generar datos reales para gráficos
 async function generateSimulatedData() {
     try {
-        console.log('📈 Modo diagnóstico: generando datos simulados para gráficos...');
+        console.log(' Modo diagnóstico: generando datos simulados para gráficos...');
         
         // Temporalmente usando datos simulados para diagnóstico
         const sensors = [
@@ -111,7 +111,7 @@ async function generateSimulatedData() {
             { tipo: 'presion', estado: 'activo' }
         ];
         
-        console.log('🔌 Sensores simulados para diagnóstico:', sensors);
+        console.log('Sensores simulados para diagnóstico:', sensors);
         
         // Datos de temperatura simulados (en el futuro se cargarán de mediciones reales)
         const temperatureData = [];
@@ -168,10 +168,10 @@ async function generateSimulatedData() {
             data: [statusCount.activo, statusCount.inactivo, statusCount.falla]
         };
         
-        console.log('✅ Datos de gráficos generados:', reportData);
+        console.log(' Datos de gráficos generados:', reportData);
         
     } catch (error) {
-        console.error('❌ Error generando datos de gráficos:', error);
+        console.error(' Error generando datos de gráficos:', error);
         
         // Datos de respaldo en caso de error
         reportData.temperatureHistory = {
@@ -403,7 +403,7 @@ async function loadMeasurementsTable() {
     const tbody = document.getElementById('measurementsTableBody');
     
     try {
-        console.log('📋 Modo diagnóstico: usando mediciones simuladas...');
+        console.log('Modo diagnóstico: usando mediciones simuladas...');
         
         // Temporalmente usando datos simulados para diagnóstico
         let measurements = [];
@@ -427,7 +427,7 @@ async function loadMeasurementsTable() {
         }
         
     } catch (error) {
-        console.error('❌ Error cargando mediciones:', error);
+        console.error('Error cargando mediciones:', error);
         measurements = [{
             timestamp: new Date().toISOString(),
             sensorName: 'Error',
@@ -560,10 +560,10 @@ async function updateReportSummary(period, sensorType, status) {
         `;
         
         summaryDiv.innerHTML = summary;
-        console.log('✅ Resumen de reporte actualizado con datos reales');
+        console.log('Resumen de reporte actualizado con datos reales');
         
     } catch (error) {
-        console.error('❌ Error actualizando resumen de reporte:', error);
+        console.error('Error actualizando resumen de reporte:', error);
         
         // Resumen de respaldo en caso de error
         const summary = `
@@ -636,9 +636,9 @@ function updateStatNumber(elementId, value) {
     const element = document.getElementById(elementId);
     if (element) {
         element.textContent = value;
-        console.log(`📊 Actualizado ${elementId}: ${value}`);
+        console.log(`Actualizado ${elementId}: ${value}`);
     } else {
-        console.warn(`⚠️ Elemento no encontrado: ${elementId}`);
+        console.warn(` Elemento no encontrado: ${elementId}`);
     }
 }
 

@@ -82,7 +82,7 @@ public class SensorService {
                     repo.save(sensor);
                     migratedCount++;
                     System.out.println(
-                            "🔄 Migrado sensor " + sensor.getId() + ": " + originalType + " → " + normalizedType);
+                            "Migrado sensor " + sensor.getId() + ": " + originalType + " → " + normalizedType);
                 }
             }
 
@@ -91,7 +91,7 @@ public class SensorService {
             result.put("migratedSensors", migratedCount);
             result.put("message", "Migración completada exitosamente");
 
-            System.out.println("✅ Migración de tipos de sensores completada: " + migratedCount + " sensores migrados");
+            System.out.println("Migración de tipos de sensores completada: " + migratedCount + " sensores migrados");
 
             return ResponseEntity.ok(result);
 

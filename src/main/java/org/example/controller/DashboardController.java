@@ -41,7 +41,7 @@ public class DashboardController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getDashboardData() {
         try {
-            // 📊 DATOS REALES DE TODAS LAS BASES DE DATOS
+            //  DATOS REALES DE TODAS LAS BASES DE DATOS
             long totalUsers = userService.listAll().size();
             long activeSensors = sensorService.listarTodos().stream()
                     .filter(s -> "activo".equalsIgnoreCase(s.getEstado())).count();
@@ -152,7 +152,7 @@ public class DashboardController {
             System.out.println("🚀 Obteniendo estadísticas reales de reportes desde las bases de datos...");
             Map<String, Object> stats = new HashMap<>();
 
-            // 📊 DATOS REALES DE SENSORES (PostgreSQL)
+            // DATOS REALES DE SENSORES (PostgreSQL)
             long totalSensors = sensorService.countAll();
             long activeSensors = sensorService.listarTodos().stream()
                     .filter(s -> "activo".equalsIgnoreCase(s.getEstado())).count();
@@ -161,16 +161,16 @@ public class DashboardController {
             long failedSensors = sensorService.listarTodos().stream()
                     .filter(s -> "falla".equalsIgnoreCase(s.getEstado())).count();
 
-            // 📊 DATOS REALES DE MEDICIONES (MongoDB)
+            // DATOS REALES DE MEDICIONES (MongoDB)
             long totalMeasurements = medicionService.countAll();
             double avgTemperature = medicionService.getAverageTemperature();
             double avgHumidity = medicionService.getAverageHumidity();
 
-            // 📊 DATOS REALES DE FACTURAS (PostgreSQL)
+            // DATOS REALES DE FACTURAS (PostgreSQL)
             long pendingInvoices = facturaService.countPendingInvoices();
             long totalUsers = userService.listAll().size();
 
-            // 📊 ALERTAS BASADAS EN SENSORES REALES
+            //  ALERTAS BASADAS EN SENSORES REALES
             long alertsGenerated = inactiveSensors + failedSensors;
 
             // Construir respuesta con datos 100% reales
@@ -198,7 +198,7 @@ public class DashboardController {
             return ResponseEntity.ok(stats);
 
         } catch (Exception e) {
-            System.err.println("❌ Error obteniendo estadísticas reales: " + e.getMessage());
+            System.err.println(" Error obteniendo estadísticas reales: " + e.getMessage());
             e.printStackTrace();
             
             // En caso de error, devolver estructura mínima con ceros
@@ -225,7 +225,7 @@ public class DashboardController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> generateTestData() {
         try {
-            System.out.println("🧪 Generando datos de prueba...");
+            System.out.println("Generando datos de prueba...");
             
             // Generar algunas mediciones de prueba
             for (int i = 0; i < 10; i++) {
@@ -270,11 +270,11 @@ public class DashboardController {
             response.put("facturas", 3);
             response.put("timestamp", java.time.Instant.now());
             
-            System.out.println("✅ Datos de prueba generados exitosamente");
+            System.out.println("Datos de prueba generados exitosamente");
             return ResponseEntity.ok(response);
             
         } catch (Exception e) {
-            System.err.println("❌ Error generando datos de prueba: " + e.getMessage());
+            System.err.println(" Error generando datos de prueba: " + e.getMessage());
             e.printStackTrace();
             
             Map<String, Object> errorResponse = new HashMap<>();

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Cargar datos financieros
 async function loadFinancialData() {
-    console.log('💵 Cargando datos financieros...');
+    console.log('Cargando datos financieros...');
     
     try {
         // Simular datos financieros
@@ -33,7 +33,7 @@ async function loadFinancialData() {
         updateStatNumber('overdueInvoices', financialStats.overdueInvoices);
         
     } catch (error) {
-        console.error('❌ Error cargando datos financieros:', error);
+        console.error('Error cargando datos financieros:', error);
         showError('Error cargando datos financieros');
     }
 }
@@ -515,4 +515,4 @@ function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-console.log('✅ facturacion.js cargado correctamente');
+console.log('facturacion.js cargado correctamente');

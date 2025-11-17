@@ -53,7 +53,7 @@ async function loadMessages(){
   const tbody = document.getElementById('msgTableBody');
   tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:1rem"><div class="spinner"></div></td></tr>`;
   try{
-    // Si tu back soporta filtros por query, agregalos aquí:
+    
     const scope = document.getElementById('scopeFilter')?.value || '';
     const groupId = document.getElementById('groupFilter')?.value || '';
     const params = new URLSearchParams();

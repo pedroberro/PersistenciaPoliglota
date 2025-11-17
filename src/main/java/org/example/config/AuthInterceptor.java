@@ -19,7 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        // Skip authentication for public endpoints
+        
         String path = request.getRequestURI();
         if (path.startsWith("/api/auth/") ||
                 path.startsWith("/actuator/") ||
@@ -40,7 +40,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        // Check for token in header or parameter
+        
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
@@ -54,7 +54,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // Refresh session activity
+        
         sesionService.refreshLastSeen(token);
         return true;
     }

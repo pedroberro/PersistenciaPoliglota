@@ -1,6 +1,4 @@
-// Sesiones (simple, con filtro por estado)
-// Endpoint esperado: GET /api/sessions  (opcional: /api/sessions?active=true|false)
-// Ítems: {id, user:{fullName,email}, role, startAt, endAt, active}
+/
 
 let allSessions = [];
 

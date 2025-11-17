@@ -9,7 +9,7 @@ let refreshTimer = null;
 
 // Inicialización cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 PersistenciaPoliglota iniciado');
+    console.log('PersistenciaPoliglota iniciado');
     
     // Cargar datos iniciales si estamos en el dashboard
     if (isDashboardPage()) {
@@ -31,7 +31,7 @@ function isDashboardPage() {
 
 // Cargar datos del dashboard
 async function loadDashboardData() {
-    console.log('📊 Cargando datos del dashboard...');
+    console.log('Cargando datos del dashboard...');
     
     try {
         // Cargar estadísticas principales en paralelo
@@ -44,7 +44,7 @@ async function loadDashboardData() {
         updateHealthDisplay(healthData);
         
     } catch (error) {
-        console.error('❌ Error cargando datos del dashboard:', error);
+        console.error('Error cargando datos del dashboard:', error);
         showError('Error cargando datos del dashboard');
     }
 }
@@ -65,11 +65,11 @@ async function loadDashboardStats() {
         }
         
         const data = await response.json();
-        console.log('📈 Estadísticas cargadas:', data);
+        console.log('Estadísticas cargadas:', data);
         return data;
         
     } catch (error) {
-        console.error('❌ Error cargando estadísticas:', error);
+        console.error('Error cargando estadísticas:', error);
         // Devolver datos simulados para mostrar la interfaz
         return {
             totalUsers: '---',
@@ -95,11 +95,11 @@ async function loadHealthStatus() {
         }
         
         const data = await response.json();
-        console.log('💚 Estado de salud:', data);
+        console.log('Estado de salud:', data);
         return data;
         
     } catch (error) {
-        console.error('❌ Error cargando estado de salud:', error);
+        console.error(' Error cargando estado de salud:', error);
         return {
             status: 'DOWN',
             components: {
@@ -230,11 +230,11 @@ function startAutoRefresh() {
     }
     
     refreshTimer = setInterval(() => {
-        console.log('🔄 Actualizando datos automáticamente...');
+        console.log('Actualizando datos automáticamente...');
         loadDashboardData();
     }, REFRESH_INTERVAL);
     
-    console.log(`⏰ Auto-refresh configurado cada ${REFRESH_INTERVAL/1000} segundos`);
+    console.log(`Auto-refresh configurado cada ${REFRESH_INTERVAL/1000} segundos`);
 }
 
 // Detener actualización automática
@@ -242,7 +242,7 @@ function stopAutoRefresh() {
     if (refreshTimer) {
         clearInterval(refreshTimer);
         refreshTimer = null;
-        console.log('⏹️ Auto-refresh detenido');
+        console.log('Auto-refresh detenido');
     }
 }
 
@@ -250,13 +250,13 @@ function stopAutoRefresh() {
 function setupErrorHandling() {
     // Capturar errores JavaScript no manejados
     window.addEventListener('error', function(event) {
-        console.error('❌ Error JavaScript:', event.error);
+        console.error('Error JavaScript:', event.error);
         showError('Error inesperado en la aplicación');
     });
     
     // Capturar promesas rechazadas no manejadas
     window.addEventListener('unhandledrejection', function(event) {
-        console.error('❌ Promesa rechazada:', event.reason);
+        console.error('Promesa rechazada:', event.reason);
         showError('Error de comunicación con el servidor');
     });
 }
@@ -399,11 +399,9 @@ function formatDate(dateString) {
     });
 }
 
-// ===== UTILITY FUNCTIONS ADICIONALES =====
 
-/**
- * Format currency values
- */
+
+
 function formatCurrency(value) {
     return new Intl.NumberFormat('es-ES', {
         style: 'currency',
@@ -411,16 +409,12 @@ function formatCurrency(value) {
     }).format(value);
 }
 
-/**
- * Format percentage values
- */
+
 function formatPercentage(value) {
     return `${(value * 100).toFixed(1)}%`;
 }
 
-/**
- * Create loading spinner
- */
+
 function createLoadingSpinner() {
     return '<div class="d-flex justify-content-center align-items-center" style="height: 200px;">' +
            '<div class="spinner-border text-primary" role="status">' +
@@ -555,4 +549,4 @@ window.addEventListener('beforeunload', function() {
     stopAutoRefresh();
 });
 
-console.log('✅ main.js cargado correctamente');
+console.log(' main.js cargado correctamente');

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Cargar estado del sistema
 async function loadSystemHealth() {
-    console.log('💓 Verificando estado del sistema...');
+    console.log(' Verificando estado del sistema...');
     
     try {
         // Cargar estado de salud desde actuator
@@ -34,7 +34,7 @@ async function loadSystemHealth() {
         loadSystemMetrics();
         
     } catch (error) {
-        console.error('❌ Error cargando estado del sistema:', error);
+        console.error(' Error cargando estado del sistema:', error);
         showError('Error cargando estado del sistema');
         
         // Datos de fallback
@@ -465,4 +465,4 @@ function testService(serviceName) {
     }, 1500);
 }
 
-console.log('✅ health.js cargado correctamente');
+console.log('health.js cargado correctamente');

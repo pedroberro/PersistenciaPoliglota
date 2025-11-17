@@ -22,7 +22,7 @@ async function loadSensorsData() {
     renderSensorsTable();
     updateSensorStats();
   } catch (error) {
-    console.error('❌ Error cargando sensores:', error);
+    console.error('Error cargando sensores:', error);
     
     // Mostrar mensaje de error en la tabla
     const tbody = document.getElementById('sensorsTableBody');
@@ -102,7 +102,7 @@ async function saveSensor() {
   };
 
   try {
-    console.log('💾 Guardando sensor:', newSensor);
+    console.log('Guardando sensor:', newSensor);
     
     const response = await fetch('/api/sensors', {
       method: 'POST',
@@ -117,7 +117,7 @@ async function saveSensor() {
     }
 
     const savedSensor = await response.json();
-    console.log('✅ Sensor guardado:', savedSensor);
+    console.log(' Sensor guardado:', savedSensor);
 
     // Recargar la lista de sensores
     await loadSensorsData();
@@ -163,7 +163,7 @@ async function updateSensor(id) {
   };
 
   try {
-    console.log('🔄 Actualizando sensor:', id, updatedSensor);
+    console.log('Actualizando sensor:', id, updatedSensor);
     
     const response = await fetch(`/api/sensors/${id}`, {
       method: 'PUT',
@@ -178,7 +178,7 @@ async function updateSensor(id) {
     }
 
     const savedSensor = await response.json();
-    console.log('✅ Sensor actualizado:', savedSensor);
+    console.log('Sensor actualizado:', savedSensor);
 
     // Recargar la lista de sensores
     await loadSensorsData();
@@ -193,7 +193,7 @@ async function updateSensor(id) {
     btn.onclick = saveSensor;
     
   } catch (error) {
-    console.error('❌ Error actualizando sensor:', error);
+    console.error('Error actualizando sensor:', error);
     showNotification('Error al actualizar el sensor: ' + error.message, 'error');
   }
 }
@@ -204,7 +204,7 @@ async function deleteSensor(id) {
   }
 
   try {
-    console.log('🗑️ Eliminando sensor:', id);
+    console.log('Eliminando sensor:', id);
     
     const response = await fetch(`/api/sensors/${id}`, {
       method: 'DELETE'
@@ -214,7 +214,7 @@ async function deleteSensor(id) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    console.log('✅ Sensor eliminado exitosamente');
+    console.log('Sensor eliminado exitosamente');
 
     // Recargar la lista de sensores
     await loadSensorsData();
@@ -223,7 +223,7 @@ async function deleteSensor(id) {
     showNotification('Sensor eliminado exitosamente', 'success');
     
   } catch (error) {
-    console.error('❌ Error eliminando sensor:', error);
+    console.error('Error eliminando sensor:', error);
     showNotification('Error al eliminar el sensor: ' + error.message, 'error');
   }
 }
@@ -302,5 +302,5 @@ function updateSensorStats() {
   if (activeElement) activeElement.textContent = activeSensors;
   if (inactiveElement) inactiveElement.textContent = inactiveSensors;
 
-  console.log('📊 Estadísticas actualizadas:', { total: totalSensors, activos: activeSensors, inactivos: inactiveSensors });
+  console.log('Estadísticas actualizadas:', { total: totalSensors, activos: activeSensors, inactivos: inactiveSensors });
 }
