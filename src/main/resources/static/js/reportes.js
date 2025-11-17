@@ -1,3 +1,15 @@
+
+if (typeof window.showSuccess !== 'function') {
+    window.showSuccess = function (msg) {
+        console.log('[SUCCESS]', msg);
+    };
+}
+if (typeof window.showError !== 'function') {
+    window.showError = function (msg) {
+        console.error('[ERROR]', msg);
+    };
+}
+
 // Variables globales para gráficos
 let temperatureChart = null;
 let sensorDistributionChart = null;
