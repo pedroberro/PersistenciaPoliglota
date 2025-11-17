@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/app   #  nombre del servicio, NO localhost
+    url: jdbc:postgresql://postgres:5432/app
     username: postgres
-    password: informatica18                    #  misma que en docker-compose.yml
+    password: informatica18
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -16,12 +16,12 @@ spring:
 
   data:
     mongodb:
-      host: mongodb      # servicio de Docker
+      host: mongodb
       port: 27017
       database: app
 
   redis:
-    host: redis          # servicio de Docker
+    host: redis
     port: 6379
 
 logging:
