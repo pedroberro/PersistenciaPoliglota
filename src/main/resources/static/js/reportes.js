@@ -1,5 +1,3 @@
-
-
 // Variables globales para gráficos
 let temperatureChart = null;
 let sensorDistributionChart = null;
@@ -15,7 +13,7 @@ let reportData = {
 
 // Inicialización cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Módulo de reportes iniciado');
+    console.log('Modulo de reportes iniciado');
     
     loadReportData();
     initializeCharts();
@@ -24,13 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Cargar datos para reportes
 async function loadReportData() {
-    console.log(' Cargando datos para reportes...');
+    console.log('Cargando datos para reportes...');
     
     try {
         // Cargar estadísticas básicas
         await loadStatistics();
         
-        // Generar datos reales para gráficos
+        // Generar datos para gráficos
         await generateSimulatedData();
         
         // Actualizar gráficos
@@ -48,12 +46,12 @@ async function loadReportData() {
 // Cargar estadísticas básicas
 async function loadStatistics() {
     try {
-        console.log('Cargando estadísticas desde API...');
+        console.log('Cargando estadisticas desde API...');
         
         const response = await fetch('/api/reports/stats');
         
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error. status: ${response.status}`);
         }
         
         const data = await response.json();
@@ -69,13 +67,13 @@ async function loadStatistics() {
         updateStatNumber('facturas-pendientes', data.pendingInvoices || 0);
         updateStatNumber('sensores-fallidos', data.failedSensors || 0);
         
-        console.log('Estadísticas de reportes actualizadas desde API');
+        console.log('Estadisticas de reportes actualizadas desde API');
         
     } catch (error) {
-        console.error('Error cargando estadísticas:', error);
+        console.error('Error cargando estadisticas:', error);
         
         // Usar datos simulados como respaldo en caso de error
-        console.log('🔧 Usando datos de respaldo...');
+        console.log('Usando datos de respaldo...');
         const fallbackData = {
             totalMeasurements: 150,
             activeSensors: 4,
@@ -98,12 +96,12 @@ async function loadStatistics() {
     }
 }
 
-// Generar datos reales para gráficos
+// Generar datos para gráficos (por ahora simulados)
 async function generateSimulatedData() {
     try {
-        console.log(' Modo diagnóstico: generando datos simulados para gráficos...');
+        console.log('Generando datos simulados para graficos...');
         
-        // Temporalmente usando datos simulados para diagnóstico
+        // Temporalmente usando datos simulados
         const sensors = [
             { tipo: 'temperatura', estado: 'activo' },
             { tipo: 'humedad', estado: 'activo' },
@@ -111,9 +109,9 @@ async function generateSimulatedData() {
             { tipo: 'presion', estado: 'activo' }
         ];
         
-        console.log('Sensores simulados para diagnóstico:', sensors);
+        console.log('Sensores simulados para diagnostico:', sensors);
         
-        // Datos de temperatura simulados (en el futuro se cargarán de mediciones reales)
+        // Datos de temperatura simulados (en el futuro se cargaran de mediciones reales)
         const temperatureData = [];
         const labels = [];
         
@@ -129,7 +127,7 @@ async function generateSimulatedData() {
             data: temperatureData
         };
         
-        // Distribución real de sensores por tipo
+        // Distribucion de sensores por tipo
         const sensorTypes = {};
         sensors.forEach(sensor => {
             const tipo = sensor.tipo || 'desconocido';
@@ -141,13 +139,13 @@ async function generateSimulatedData() {
             data: Object.values(sensorTypes)
         };
         
-        // Mediciones por hora (simulado hasta tener datos reales)
+        // Mediciones por hora (simulado)
         reportData.hourlyMeasurements = {
             labels: Array.from({length: 24}, (_, i) => `${i}:00`),
             data: Array.from({length: 24}, () => Math.floor(Math.random() * sensors.length * 10) + 10)
         };
         
-        // Estado real de sensores
+        // Estado de sensores
         const statusCount = {
             'activo': 0,
             'inactivo': 0,
@@ -155,7 +153,7 @@ async function generateSimulatedData() {
         };
         
         sensors.forEach(sensor => {
-            const estado = sensor.estado?.toLowerCase() || 'inactivo';
+            const estado = sensor.estado ? sensor.estado.toLowerCase() : 'inactivo';
             if (statusCount.hasOwnProperty(estado)) {
                 statusCount[estado]++;
             } else {
@@ -168,10 +166,10 @@ async function generateSimulatedData() {
             data: [statusCount.activo, statusCount.inactivo, statusCount.falla]
         };
         
-        console.log(' Datos de gráficos generados:', reportData);
+        console.log('Datos de graficos generados:', reportData);
         
     } catch (error) {
-        console.error(' Error generando datos de gráficos:', error);
+        console.error('Error generando datos de graficos:', error);
         
         // Datos de respaldo en caso de error
         reportData.temperatureHistory = {
@@ -315,7 +313,7 @@ function initHourlyMeasurementsChart() {
                 x: {
                     title: {
                         display: true,
-                        text: 'Hora del Día'
+                        text: 'Hora del Dia'
                     }
                 }
             }
@@ -401,29 +399,33 @@ function updateSensorStatusChart() {
 // Cargar tabla de mediciones
 async function loadMeasurementsTable() {
     const tbody = document.getElementById('measurementsTableBody');
-    
+    let measurements = [];
+
     try {
-        console.log('Modo diagnóstico: usando mediciones simuladas...');
-        
-        // Temporalmente usando datos simulados para diagnóstico
-        let measurements = [];
-        
-        // Si no hay mediciones reales, generar datos simulados para mostrar la funcionalidad
-        if (measurements.length === 0) {
-            for (let i = 0; i < 10; i++) {
-                const date = new Date();
-                date.setMinutes(date.getMinutes() - (i * 15));
-                
-                measurements.push({
-                    timestamp: date.toISOString(),
-                    sensorId: `sensor-${Math.floor(Math.random() * 5) + 1}`,
-                    sensorName: `Sensor ${Math.floor(Math.random() * 5) + 1}`,
-                    tipo: ['temperatura', 'humedad', 'presion'][Math.floor(Math.random() * 3)],
-                    valor: (Math.random() * 100).toFixed(2),
-                    unidad: ['°C', '%', 'hPa'][Math.floor(Math.random() * 3)],
-                    estado: ['normal', 'alerta', 'critico'][Math.floor(Math.random() * 3)]
-                });
-            }
+        console.log('Usando mediciones simuladas para la tabla...');
+
+        // Cuando tengas endpoint real, reemplazamos esto por un fetch.
+        // Por ahora, siempre generamos simuladas:
+        for (let i = 0; i < 10; i++) {
+            const date = new Date();
+            date.setMinutes(date.getMinutes() - (i * 15));
+            
+            const tipoIndex = Math.floor(Math.random() * 3);
+            const tipoValor = ['temperatura', 'humedad', 'presion'][tipoIndex];
+            const unidadValor = ['°C', '%', 'hPa'][tipoIndex];
+
+            const estadoIndex = Math.floor(Math.random() * 3);
+            const estadoValor = ['normal', 'alerta', 'critico'][estadoIndex];
+
+            measurements.push({
+                timestamp: date.toISOString(),
+                sensorId: `sensor-${Math.floor(Math.random() * 5) + 1}`,
+                sensorName: `Sensor ${Math.floor(Math.random() * 5) + 1}`,
+                tipo: tipoValor,
+                valor: (Math.random() * 100).toFixed(2),
+                unidad: unidadValor,
+                estado: estadoValor
+            });
         }
         
     } catch (error) {
@@ -438,7 +440,9 @@ async function loadMeasurementsTable() {
         }];
     }
     
-    tbody.innerHTML = measurements.map(m => `
+    tbody.innerHTML = measurements.map(m => {
+        const statusText = (m.estado || m.status || 'normal');
+        return `
         <tr>
             <td>${new Date(m.timestamp).toLocaleString('es-ES')}</td>
             <td>${m.sensorName || m.sensor || 'N/A'}</td>
@@ -446,22 +450,26 @@ async function loadMeasurementsTable() {
             <td>${m.valor || m.value || '---'}</td>
             <td>${m.unidad || m.unit || '---'}</td>
             <td>
-                <span class="badge ${getStatusBadge(m.estado || m.status || 'normal')}">
-                    ${m.estado || m.status || 'normal'}
+                <span class="badge ${getStatusBadge(statusText)}">
+                    ${statusText}
                 </span>
             </td>
         </tr>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Obtener clase de badge para estado
 function getStatusBadge(status) {
+    const normalized = String(status || '').toLowerCase();
     const badges = {
-        'Normal': 'badge-success',
-        'Alerta': 'badge-warning', 
-        'Crítico': 'badge-danger'
+        'normal': 'badge-success',
+        'alerta': 'badge-warning', 
+        'critico': 'badge-danger',
+        'crítico': 'badge-danger',
+        'error': 'badge-danger'
     };
-    return badges[status] || 'badge-secondary';
+    return badges[normalized] || 'badge-secondary';
 }
 
 // Configurar event listeners
@@ -496,15 +504,15 @@ async function generateReport() {
     showSuccess('Generando reporte...');
     
     try {
-        // Regenerar datos con datos reales según filtros
+        // Regenerar datos segun filtros (por ahora simulados)
         await generateSimulatedData();
         updateAllCharts();
         await loadMeasurementsTable();
         await updateReportSummary(period, sensorType, status);
         
-        showSuccess('Reporte generado correctamente con datos reales');
+        showSuccess('Reporte generado correctamente');
     } catch (error) {
-        console.error('❌ Error generando reporte:', error);
+        console.error('Error generando reporte:', error);
         showError('Error generando reporte: ' + error.message);
     }
 }
@@ -519,7 +527,7 @@ async function updateReportSummary(period, sensorType, status) {
     const summaryDiv = document.getElementById('reportSummary');
     
     try {
-        // Temporalmente usando datos simulados para diagnóstico
+        // Temporalmente usando datos simulados para diagnostico
         const data = {
             totalMeasurements: 1234,
             activeSensors: 4,
@@ -538,7 +546,7 @@ async function updateReportSummary(period, sensorType, status) {
             <h5>Resumen del Reporte</h5>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div>
-                    <p><strong>Período:</strong> ${getPeriodLabel(period)}</p>
+                    <p><strong>Periodo:</strong> ${getPeriodLabel(period)}</p>
                     <p><strong>Tipo de Sensor:</strong> ${sensorType === 'all' ? 'Todos' : sensorType}</p>
                     <p><strong>Estado:</strong> ${status === 'all' ? 'Todos' : status}</p>
                 </div>
@@ -554,13 +562,15 @@ async function updateReportSummary(period, sensorType, status) {
                     <li>Total de sensores registrados: ${totalSensors}</li>
                     <li>Sensores activos: ${activeSensors}, Inactivos: ${inactiveSensors}</li>
                     <li>Datos actualizados en tiempo real desde la base de datos</li>
-                    ${inactiveSensors > 0 ? '<li style="color: orange;">⚠️ Se recomienda revisar los sensores inactivos</li>' : '<li style="color: green;">✅ Todos los sensores están funcionando correctamente</li>'}
+                    ${inactiveSensors > 0 
+                        ? '<li style="color: orange;">Atencion: se recomienda revisar los sensores inactivos</li>' 
+                        : '<li style="color: green;">Todos los sensores estan funcionando correctamente</li>'}
                 </ul>
             </div>
         `;
         
         summaryDiv.innerHTML = summary;
-        console.log('Resumen de reporte actualizado con datos reales');
+        console.log('Resumen de reporte actualizado');
         
     } catch (error) {
         console.error('Error actualizando resumen de reporte:', error);
@@ -570,7 +580,7 @@ async function updateReportSummary(period, sensorType, status) {
             <h5>Resumen del Reporte</h5>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div>
-                    <p><strong>Período:</strong> ${getPeriodLabel(period)}</p>
+                    <p><strong>Periodo:</strong> ${getPeriodLabel(period)}</p>
                     <p><strong>Tipo de Sensor:</strong> ${sensorType === 'all' ? 'Todos' : sensorType}</p>
                     <p><strong>Estado:</strong> ${status === 'all' ? 'Todos' : status}</p>
                 </div>
@@ -581,8 +591,8 @@ async function updateReportSummary(period, sensorType, status) {
                 </div>
             </div>
             <div style="margin-top: 1rem; padding: 1rem; background: #ffebee; border-radius: 4px;">
-                <h6>⚠️ Error cargando datos:</h6>
-                <p>No se pudieron cargar los datos reales. Verifique la conexión con el servidor.</p>
+                <h6>Error cargando datos:</h6>
+                <p>No se pudieron cargar los datos reales. Verifique la conexion con el servidor.</p>
             </div>
         `;
         
@@ -607,7 +617,7 @@ function exportToCSV() {
     const csvContent = "data:text/csv;charset=utf-8," + 
         "Fecha/Hora,Sensor,Tipo,Valor,Unidad,Estado\n" +
         "2025-10-31 19:45,Sensor 1,Temperatura,22.5,°C,Normal\n" +
-        "2025-10-31 19:45,Sensor 2,Humedad,65,%, Normal\n" +
+        "2025-10-31 19:45,Sensor 2,Humedad,65,%,Normal\n" +
         "2025-10-31 19:30,Sensor 1,Temperatura,22.3,°C,Normal\n";
     
     const encodedUri = encodeURI(csvContent);
@@ -623,23 +633,23 @@ function exportToCSV() {
 
 // Exportar a PDF
 function exportToPDF() {
-    // Simular exportación a PDF
+    // Simular exportacion a PDF
     showSuccess('Generando reporte PDF...');
     
     setTimeout(() => {
-        showSuccess('Reporte PDF generado. Funcionalidad de descarga no implementada en esta demo.');
+        showSuccess('Reporte PDF generado. Funcion de descarga no implementada en esta demo.');
     }, 2000);
 }
 
-// Función auxiliar para actualizar números de estadísticas
+// Funcion auxiliar para actualizar numeros de estadisticas
 function updateStatNumber(elementId, value) {
     const element = document.getElementById(elementId);
     if (element) {
         element.textContent = value;
         console.log(`Actualizado ${elementId}: ${value}`);
     } else {
-        console.warn(` Elemento no encontrado: ${elementId}`);
+        console.warn(`Elemento no encontrado: ${elementId}`);
     }
 }
 
-console.log('✅ reportes.js cargado correctamente (modo diagnóstico)');
+console.log('reportes.js cargado correctamente');
