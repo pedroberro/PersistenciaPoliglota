@@ -18,7 +18,9 @@ public class ReportController {
         this.reporteService = reporteService;
     }
 
-    // Endpoint para generar el reporte de temperatura
+    // ❌ SE ELIMINA /stats PARA EVITAR CONFLICTO
+    // Ese endpoint existe en DashboardController con datos reales
+
     @GetMapping("/temperature")
     public ResponseEntity<HistorialEjecucion> temperatureReport(
             @RequestParam String city,
@@ -32,7 +34,6 @@ public class ReportController {
         return ResponseEntity.ok(historialEjecucion);
     }
 
-    // Historial de ejecuciones (con o sin userId)
     @GetMapping("/history")
     public ResponseEntity<List<HistorialEjecucion>> history(
             @RequestParam(required = false) Integer userId) {
@@ -44,7 +45,7 @@ public class ReportController {
         return ResponseEntity.ok(historial);
     }
 
-    // Endpoint demo para datos de gráficos
+    // Datos demo para charts
     @GetMapping("/chart-data")
     public ResponseEntity<?> getChartData(
             @RequestParam String type,
