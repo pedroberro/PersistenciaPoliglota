@@ -1,15 +1,3 @@
-
-if (typeof window.showSuccess !== 'function') {
-    window.showSuccess = function (msg) {
-        console.log('[SUCCESS]', msg);
-    };
-}
-if (typeof window.showError !== 'function') {
-    window.showError = function (msg) {
-        console.error('[ERROR]', msg);
-    };
-}
-
 // Variables globales para gráficos
 let temperatureChart = null;
 let sensorDistributionChart = null;
@@ -653,11 +641,24 @@ function exportToPDF() {
     }, 2000);
 }
 
+// Ocultar spinner de la tarjeta de estadística asociada a un elemento
+function hideSpinnerFor(element) {
+    if (!element) return;
+    const card = element.closest('.card');
+    if (!card) return;
+
+    const spinner = card.querySelector('.spinner-border');
+    if (spinner) {
+        spinner.style.display = 'none';
+    }
+}
+
 // Funcion auxiliar para actualizar numeros de estadisticas
 function updateStatNumber(elementId, value) {
     const element = document.getElementById(elementId);
     if (element) {
         element.textContent = value;
+        hideSpinnerFor(element);
         console.log(`Actualizado ${elementId}: ${value}`);
     } else {
         console.warn(`Elemento no encontrado: ${elementId}`);
