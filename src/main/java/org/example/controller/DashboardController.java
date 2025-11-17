@@ -31,14 +31,45 @@ public class DashboardController {
         this.userService = userService;
     }
 
-    // Ruta principal para la página de inicio
+    // ===========================
+    // VISTAS HTML
+    // ===========================
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("pageTitle", "Dashboard Principal");
         return "index";
     }
 
-    // API REST para datos del dashboard (utilizada por JavaScript)
+    @GetMapping("/sensores")
+    public String sensores(Model model) {
+        model.addAttribute("pageTitle", "Gestión de Sensores");
+        return "sensores";
+    }
+
+    @GetMapping("/reportes")
+    public String reportes(Model model) {
+        model.addAttribute("pageTitle", "Reportes y Estadísticas");
+        return "reportes";
+    }
+
+    @GetMapping("/facturacion")
+    public String facturacion(Model model) {
+        model.addAttribute("pageTitle", "Sistema de Facturación");
+        return "facturacion";
+    }
+
+    @GetMapping("/health")
+    public String health(Model model) {
+        model.addAttribute("pageTitle", "Estado del Sistema");
+        return "health";
+    }
+
+    // ===========================
+    // APIS PARA EL DASHBOARD
+    // ===========================
+
+    // Datos generales del dashboard principal
     @GetMapping("/api/dashboard")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getDashboardData() {
@@ -69,32 +100,7 @@ public class DashboardController {
         }
     }
 
-    // Vistas HTML
-    @GetMapping("/sensores")
-    public String sensores(Model model) {
-        model.addAttribute("pageTitle", "Gestión de Sensores");
-        return "sensores";
-    }
-
-    @GetMapping("/reportes")
-    public String reportes(Model model) {
-        model.addAttribute("pageTitle", "Reportes y Estadísticas");
-        return "reportes";
-    }
-
-    @GetMapping("/facturacion")
-    public String facturacion(Model model) {
-        model.addAttribute("pageTitle", "Sistema de Facturación");
-        return "facturacion";
-    }
-
-    @GetMapping("/health")
-    public String health(Model model) {
-        model.addAttribute("pageTitle", "Estado del Sistema");
-        return "health";
-    }
-
-    // APIs REST para datos específicos
+    // Estado de sensores para /health
     @GetMapping("/api/sensors/status")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> sensorsStatus() {
@@ -126,6 +132,7 @@ public class DashboardController {
         }
     }
 
+    // Mediciones recientes (usado por la home)
     @GetMapping("/api/measurements/recent")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> recentMeasurements() {
@@ -144,14 +151,20 @@ public class DashboardController {
         }
     }
 
-    // 🔹 Estadísticas para la PANTALLA DE REPORTES (/reportes)
-    //    Endpoint simple y estable: siempre devuelve algo válido.
+    // ===========================
+    // API PARA PANTALLA /reportes
+    // ===========================
+
+    /**
+     * Endpoint consumido por reportes.js en loadStatistics().
+     * Siempre devuelve 200 OK con un JSON válido.
+     * Si algo falla, rellena con datos de demo para que la UI no rompa.
+     */
     @GetMapping("/api/reports/stats")
     @ResponseBody
     public Map<String, Object> getReportsStats() {
         Map<String, Object> stats = new HashMap<>();
 
-        // Si alguno de estos servicios falla, igual la pantalla funciona
         try {
             long totalSensors = sensorService.countAll();
             long activeSensors = sensorService.listarTodos().stream()
@@ -168,19 +181,27 @@ public class DashboardController {
             long pendingInvoices = facturaService.countPendingInvoices();
             long totalUsers = userService.listAll().size();
 
+            // Si querés, acá podés usar valores reales de promedio:
+            // double avgTemp = medicionService.getAverageTemperature();
+            // double avgHum  = medicionService.getAverageHumidity();
+            // pero para la demo usamos valores fijos
+            double avgTemp = 22.3;
+            double avgHum = 65.8;
+
             stats.put("totalMeasurements", totalMeasurements);
             stats.put("activeSensors", activeSensors);
             stats.put("inactiveSensors", inactiveSensors);
             stats.put("failedSensors", failedSensors);
             stats.put("totalSensors", totalSensors);
-            stats.put("avgTemperature", 22.3);   // valor de demo
-            stats.put("avgHumidity", 65.8);      // valor de demo
+            stats.put("avgTemperature", avgTemp);
+            stats.put("avgHumidity", avgHum);
             stats.put("alertsGenerated", inactiveSensors + failedSensors);
             stats.put("pendingInvoices", pendingInvoices);
             stats.put("totalUsers", totalUsers);
             stats.put("timestamp", Instant.now().toString());
+
         } catch (Exception e) {
-            // Si algo explota, devolvemos números de demo para que la UI no rompa
+            // Fallback: datos de respaldo si algo explota
             stats.put("error", "Usando datos de respaldo: " + e.getMessage());
             stats.put("totalMeasurements", 150);
             stats.put("activeSensors", 4);
