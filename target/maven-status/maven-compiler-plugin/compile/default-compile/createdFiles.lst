@@ -78,6 +78,7 @@ org\example\service\MedicionService.class
 org\example\Main.class
 org\example\controller\DashboardController.class
 org\example\model\mongodb\Alerta.class
+org\example\service\MovimientoCuentaRepositorio.class
 org\example\model\postgres\MovimientoCuenta.class
 org\example\model\postgres\Factura.class
 org\example\DTOs\UsuarioBasicoDTO.class

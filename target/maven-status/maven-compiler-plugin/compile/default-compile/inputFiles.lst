@@ -1,91 +1,92 @@
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\util\DateUtil.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\SolicitudProcesoService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\ReportController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\SensorDatosDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\PostgresHealthIndicator.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\RedisConfig.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\GrupoMiembroDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\ControlFuncionamientoRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\AlertaService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\AlertaRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\CuentaCorrienteRepositorio.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\RedisHealthIndicator.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\DashboardController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\SesionUsuarioDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\MessageRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\MedicionRegistroDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\MovimientoCuentaRepositorio.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\MedicionRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\ProcesoRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Sensor.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\GlobalExceptionHandler.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\FacturacionController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\ControlFuncionamiento.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\ProcesoDefinicionDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\Main.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\DataSimulationService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\SensorController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\GrupoUsuarioDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\ProcesoSolicitudDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\AuthInterceptor.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Proceso.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\GroupRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\redis\SesionRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\HistorialEjecucion.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\ProcesoController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\AlertaUmbralDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\util\SensorTypes.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\CuentaCorrienteControlador.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\HealthController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\PagoService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\ProcesoService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\FacturaService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\RolRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\SecurityConfig.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\User.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\MongoConfig.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\LoginController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Rol.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\AlertaRegistroDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\CuentaCorriente.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\SolicitudProceso.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Medicion.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\MessageController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\PagoRegistroDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\SensorService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\HistorialEjecucionRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\SensorRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\SesionService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\ViewController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\PostgresConfig.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\UsuarioBasicoDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Factura.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\FacturaRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\util\ReportGenerator.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\MedicionService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\FacturacionService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\redis\Sesion.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\MensajeUsuarioDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\UsuarioAutenticadoDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\GroupController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\CuentaCorrienteServicio.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Alerta.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\SensorEstadisticasDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\SolicitudProcesoRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\FacturacionResumenDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\MessageService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\ReporteResumenDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\GroupService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\MovimientoCuenta.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\UserService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\MongoHealthIndicator.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\DTOs\FacturaRegistroDTO.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\UserRepository.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Message.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\util\EncryptionUtil.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Pago.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\model\postgres\GroupChat.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\service\ReporteService.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\controller\MedicionController.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\config\WebConfig.java
-C:\Users\Pedro\pp\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\PagoRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\DataSimulationService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\GrupoUsuarioDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\SensorController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\RolRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\MongoHealthIndicator.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\MovimientoCuentaRepositorio.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\CuentaCorrienteControlador.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\PostgresConfig.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\ProcesoDefinicionDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Proceso.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\MessageService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\FacturacionController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\AuthInterceptor.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\redis\SesionRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\CuentaCorriente.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\WebConfig.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\HistorialEjecucion.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\SesionUsuarioDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\FacturaRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\HistorialEjecucionRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\ControlFuncionamientoRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\redis\Sesion.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\ProcesoSolicitudDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\GroupRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\GroupController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\AlertaUmbralDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\GlobalExceptionHandler.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\RedisHealthIndicator.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\UserRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\FacturacionService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\FacturaRegistroDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\SolicitudProcesoService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\Main.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\HealthController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\UsuarioAutenticadoDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\MedicionController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\ViewController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\RedisConfig.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\PagoService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\ProcesoController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\SolicitudProcesoRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\AlertaRegistroDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\PagoRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\ProcesoService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\UserService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Rol.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\CuentaCorrienteServicio.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\util\SensorTypes.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\PostgresHealthIndicator.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\FacturaService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\LoginController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\FacturacionResumenDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Sensor.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\MedicionRegistroDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\MongoConfig.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\ReporteResumenDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\config\SecurityConfig.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\MedicionService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\SesionService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\GroupChat.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\ReporteService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\GrupoMiembroDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\UsuarioBasicoDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\MensajeUsuarioDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\MessageRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\AlertaRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\MessageController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\SensorEstadisticasDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\PagoRegistroDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\AlertaService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\GroupService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Message.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\service\SensorService.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\util\DateUtil.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\DashboardController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\SolicitudProceso.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\DTOs\SensorDatosDTO.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\User.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Medicion.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\MovimientoCuenta.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\MedicionRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\ProcesoRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\util\ReportGenerator.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\CuentaCorrienteRepositorio.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\SensorRepository.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\controller\ReportController.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\ControlFuncionamiento.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\MovimientoCuentaRepositorio.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Alerta.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Factura.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Pago.java
+C:\Users\chesl\Desktop\UADE\3er año\Ingenieria de datos 2\PersistenciaPoliglota\src\main\java\org\example\util\EncryptionUtil.java

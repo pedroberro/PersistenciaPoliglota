@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres   # <-- CONTRASEÑA EN DOCKER
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
 
@@ -29,10 +29,21 @@ services:
       - mongodb
     environment:
       SPRING_PROFILES_ACTIVE: docker
+
+      # PostgreSQL
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: app
       DB_USER: postgres
-      DB_PASS: postgres              # <-- LA MISMA CONTRASEÑA
+      DB_PASS: postgres
+
+      # MongoDB (para que NO use localhost)
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DB: app
+
+      # Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     ports:
       - "8080:8080"
