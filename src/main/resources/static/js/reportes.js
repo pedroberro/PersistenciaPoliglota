@@ -40,6 +40,8 @@ async function loadReportData() {
     } catch (error) {
         console.error('Error cargando datos de reportes:', error);
         showError('Error cargando datos de reportes');
+        // Aunque haya error, ocultamos loaders para que no queden girando
+        markStatsLoaded();
     }
 }
 
@@ -66,8 +68,9 @@ async function loadStatistics() {
         updateStatNumber('alertas-generadas', data.alertsGenerated || 0);
         updateStatNumber('facturas-pendientes', data.pendingInvoices || 0);
         updateStatNumber('sensores-fallidos', data.failedSensors || 0);
-        
+
         console.log('Estadisticas de reportes actualizadas desde API');
+        markStatsLoaded();
         
     } catch (error) {
         console.error('Error cargando estadisticas:', error);
@@ -93,6 +96,9 @@ async function loadStatistics() {
         updateStatNumber('alertas-generadas', fallbackData.alertsGenerated);
         updateStatNumber('facturas-pendientes', fallbackData.pendingInvoices);
         updateStatNumber('sensores-fallidos', fallbackData.failedSensors);
+
+        // Aun con fallback, ocultamos los loaders
+        markStatsLoaded();
     }
 }
 
@@ -404,7 +410,6 @@ async function loadMeasurementsTable() {
     try {
         console.log('Usando mediciones simuladas para la tabla...');
 
-        // Cuando tengas endpoint real, reemplazamos esto por un fetch.
         // Por ahora, siempre generamos simuladas:
         for (let i = 0; i < 10; i++) {
             const date = new Date();
@@ -641,28 +646,33 @@ function exportToPDF() {
     }, 2000);
 }
 
-// Ocultar spinner de la tarjeta de estadística asociada a un elemento
-function hideSpinnerFor(element) {
-    if (!element) return;
-    const card = element.closest('.card');
-    if (!card) return;
-
-    const spinner = card.querySelector('.spinner-border');
-    if (spinner) {
-        spinner.style.display = 'none';
-    }
-}
-
 // Funcion auxiliar para actualizar numeros de estadisticas
 function updateStatNumber(elementId, value) {
     const element = document.getElementById(elementId);
     if (element) {
         element.textContent = value;
-        hideSpinnerFor(element);
         console.log(`Actualizado ${elementId}: ${value}`);
+
+        // Ocultar spinner dentro de la tarjeta de ese indicador
+        const card = element.closest('.stat-card') || element.parentElement;
+        if (card) {
+            const spinner = card.querySelector('.spinner-border, .spinner-grow');
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+        }
     } else {
         console.warn(`Elemento no encontrado: ${elementId}`);
     }
+}
+
+// Ocultar todos los loaders de los indicadores (por si quedo alguno)
+function markStatsLoaded() {
+    document
+        .querySelectorAll('.stat-card .spinner-border, .stat-card .spinner-grow')
+        .forEach(spinner => {
+            spinner.style.display = 'none';
+        });
 }
 
 console.log('reportes.js cargado correctamente');
