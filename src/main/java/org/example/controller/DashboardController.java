@@ -181,10 +181,7 @@ public class DashboardController {
             long pendingInvoices = facturaService.countPendingInvoices();
             long totalUsers = userService.listAll().size();
 
-            // Si querés, acá podés usar valores reales de promedio:
-            // double avgTemp = medicionService.getAverageTemperature();
-            // double avgHum  = medicionService.getAverageHumidity();
-            // pero para la demo usamos valores fijos
+            
             double avgTemp = 22.3;
             double avgHum = 65.8;
 
