@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/app   #  nombre del servicio, NO localhost
+    username: postgres
+    password: informatica18                    #  misma que en docker-compose.yml
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    open-in-view: false
+
+  data:
+    mongodb:
+      host: mongodb      # servicio de Docker
+      port: 27017
+      database: app
+
+  redis:
+    host: redis          # servicio de Docker
+    port: 6379
+
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: INFO
+    org.hibernate.SQL: INFO
