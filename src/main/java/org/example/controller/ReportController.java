@@ -18,12 +18,6 @@ public class ReportController {
         this.reporteService = reporteService;
     }
 
-    // ✅ NUEVO: estadísticas generales para la pantalla de /reportes
-    @GetMapping("/stats")
-    public ResponseEntity<Map<String, Object>> getStats() {
-        return ResponseEntity.ok(reporteService.getDashboardStats());
-    }
-
     // Endpoint para generar el reporte de temperatura
     @GetMapping("/temperature")
     public ResponseEntity<HistorialEjecucion> temperatureReport(
@@ -38,7 +32,7 @@ public class ReportController {
         return ResponseEntity.ok(historialEjecucion);
     }
 
-    
+    // Historial de ejecuciones (con o sin userId)
     @GetMapping("/history")
     public ResponseEntity<List<HistorialEjecucion>> history(
             @RequestParam(required = false) Integer userId) {
@@ -50,7 +44,7 @@ public class ReportController {
         return ResponseEntity.ok(historial);
     }
 
-    // Endpoint para obtener los datos para los gráficos (demo)
+    // Endpoint demo para datos de gráficos
     @GetMapping("/chart-data")
     public ResponseEntity<?> getChartData(
             @RequestParam String type,
