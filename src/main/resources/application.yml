@@ -10,13 +10,13 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           '[time_zone]': America/Argentina/Buenos_Aires
-    show-sql: true
+    show-sql: false
     open-in-view: false
     defer-datasource-initialization: true
 
@@ -25,15 +25,23 @@ spring:
       host: localhost
       port: 27017
       database: app
+      # Configuraciones de timeout para evitar desconexiones intermitentes
+      uri: mongodb://localhost:27017/app?socketTimeoutMS=30000&connectTimeoutMS=10000&serverSelectionTimeoutMS=5000
     redis:
       host: localhost
       port: 6379
 
 logging:
   level:
-    '[org.springframework.jdbc.core.JdbcTemplate]': INFO
-    '[org.hibernate.SQL]': INFO
-    '[org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration]': DEBUG
+    '[org.springframework.jdbc.core.JdbcTemplate]': WARN
+    '[org.hibernate.SQL]': WARN
+    '[org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration]': WARN
+    # Reducir logs de MongoDB para evitar spam de timeouts
+    '[org.mongodb.driver.cluster]': WARN
+    '[org.mongodb.driver.connection]': WARN
+    # Reducir logs de Hibernate para ocultar consultas SQL
+    '[org.hibernate.type]': WARN
+    '[org.hibernate.stat]': WARN
 
 # Configuración para desarrollo local sin Docker
 ---
