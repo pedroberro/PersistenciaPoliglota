@@ -7,7 +7,12 @@ import org.example.service.SensorService;
 import org.example.service.UserService;
 import org.example.service.SesionService;
 import org.example.service.MessageService;
+import org.example.service.FacturaService;
+import org.example.service.FacturacionService;
 import org.example.DTOs.MensajeUsuarioDTO;
+import org.example.DTOs.FacturaRegistroDTO;
+import org.example.DTOs.FacturacionResumenDTO;
+import org.example.model.postgres.Factura;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -22,6 +27,8 @@ public class ConsoleMenu {
     private final SesionService sesionService;
     private final SensorService sensorService;
     private final MessageService messageService;
+    private final FacturaService facturaService;
+    private final FacturacionService facturacionService;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -32,11 +39,15 @@ public class ConsoleMenu {
     public ConsoleMenu(UserService userService,
             SesionService sesionService,
             SensorService sensorService,
-            MessageService messageService) {
+            MessageService messageService,
+            FacturaService facturaService,
+            FacturacionService facturacionService) {
         this.userService = userService;
         this.sesionService = sesionService;
         this.sensorService = sensorService;
         this.messageService = messageService;
+        this.facturaService = facturaService;
+        this.facturacionService = facturacionService;
     }
 
     // 🔹 Punto de entrada del menú
@@ -52,6 +63,7 @@ public class ConsoleMenu {
             System.out.println("1) Usuarios y sesiones");
             System.out.println("2) Sensores");
             System.out.println("3) Mensajes");
+            System.out.println("4) Facturación");
             System.out.println("0) Salir");
             System.out.print("Opción: ");
 
@@ -61,6 +73,7 @@ public class ConsoleMenu {
                 case "1" -> menuUsuariosYSesiones();
                 case "2" -> menuSensores();
                 case "3" -> menuMensajes();
+                case "4" -> menuFacturacion();
                 case "0" -> System.out.println("Saliendo de la aplicación...");
                 default -> System.out.println("Opción inválida, intente nuevamente.");
             }
@@ -482,6 +495,208 @@ public class ConsoleMenu {
             
         } catch (Exception e) {
             System.out.println("❌ Error al obtener mensajes: " + e.getMessage());
+        }
+    }
+
+    // ======================================================
+    // MENÚ 4 - FACTURACIÓN
+    // ======================================================
+    private void menuFacturacion() {
+        String option;
+        do {
+            System.out.println("\n----- FACTURACIÓN -----");
+            
+            if (currentUser != null) {
+                System.out.println("Usuario: " + currentUser.getFullName());
+            } else {
+                System.out.println("⚠️ Debe iniciar sesión para ver facturación");
+                System.out.println("0) Volver al menú principal");
+                System.out.print("Opción: ");
+                scanner.nextLine();
+                return;
+            }
+            
+            System.out.println("1) Ver mis facturas");
+            System.out.println("2) Ver resumen de facturación");
+            System.out.println("3) Ver todas las facturas (Admin)");
+            System.out.println("4) Crear factura manual");
+            System.out.println("0) Volver al menú principal");
+            System.out.print("Opción: ");
+
+            option = scanner.nextLine().trim();
+
+            switch (option) {
+                case "1" -> verMisFacturas();
+                case "2" -> verResumenFacturacion();
+                case "3" -> verTodasFacturas();
+                case "4" -> crearFacturaManual();
+                case "0" -> System.out.println("Volviendo al menú principal...");
+                default -> System.out.println("Opción inválida.");
+            }
+        } while (!"0".equals(option));
+    }
+
+    private void verMisFacturas() {
+        try {
+            System.out.println("\n--- MIS FACTURAS ---");
+            
+            List<Factura> facturas = facturaService.listByUser(currentUser.getId());
+            
+            if (facturas.isEmpty()) {
+                System.out.println("No tiene facturas registradas.");
+                return;
+            }
+            
+            System.out.println("\n📄 Sus facturas (" + facturas.size() + " facturas):");
+            System.out.println("─".repeat(90));
+            System.out.printf("%-5s %-15s %-12s %-12s %-15s %-10s%n", 
+                            "ID", "Fecha", "Vencimiento", "Estado", "Monto", "Info");
+            System.out.println("─".repeat(90));
+            
+            for (Factura f : facturas) {
+                System.out.printf("%-5d %-15s %-12s %-12s $%-14.2f %s%n",
+                    f.getId(),
+                    f.getIssuedAt() != null ? f.getIssuedAt().toLocalDate().toString() : "N/A",
+                    f.getDueDate() != null ? f.getDueDate().toString() : "N/A",
+                    f.getStatus() != null ? f.getStatus() : "N/A",
+                    f.getTotalAmount() != null ? f.getTotalAmount().doubleValue() : 0.0,
+                    f.getLines() != null ? f.getLines().substring(0, Math.min(20, f.getLines().length())) + "..." : ""
+                );
+            }
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener facturas: " + e.getMessage());
+        }
+    }
+
+    private void verResumenFacturacion() {
+        try {
+            System.out.println("\n--- RESUMEN DE FACTURACIÓN ---");
+            
+            // Obtener estadísticas del servicio
+            long totalFacturas = facturaService.countAll();
+            long facturasPendientes = facturaService.countByStatus("pendiente");
+            long facturasPagadas = facturaService.countByStatus("pagada");
+            long facturasVencidas = facturaService.countByStatus("vencida");
+            
+            List<Factura> misFacturas = facturaService.listByUser(currentUser.getId());
+            double totalMonto = misFacturas.stream()
+                .filter(f -> f.getTotalAmount() != null)
+                .mapToDouble(f -> f.getTotalAmount().doubleValue())
+                .sum();
+            
+            System.out.println("\n📊 Estadísticas generales:");
+            System.out.println("   • Total de facturas en sistema: " + totalFacturas);
+            System.out.println("   • Facturas pendientes: " + facturasPendientes);
+            System.out.println("   • Facturas pagadas: " + facturasPagadas);
+            System.out.println("   • Facturas vencidas: " + facturasVencidas);
+            
+            System.out.println("\n💰 Sus facturas:");
+            System.out.println("   • Cantidad de facturas: " + misFacturas.size());
+            System.out.printf("   • Monto total: $%.2f%n", totalMonto);
+            
+            long misPendientes = misFacturas.stream()
+                .filter(f -> "pendiente".equals(f.getStatus()))
+                .count();
+            System.out.println("   • Facturas pendientes: " + misPendientes);
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener resumen: " + e.getMessage());
+        }
+    }
+
+    private void verTodasFacturas() {
+        try {
+            System.out.println("\n--- TODAS LAS FACTURAS (ADMIN) ---");
+            
+            List<Factura> todasFacturas = facturaService.listAll();
+            
+            if (todasFacturas.isEmpty()) {
+                System.out.println("No hay facturas en el sistema.");
+                return;
+            }
+            
+            System.out.println("\n📄 Todas las facturas (" + todasFacturas.size() + " facturas):");
+            System.out.println("─".repeat(100));
+            System.out.printf("%-5s %-10s %-15s %-12s %-12s %-15s %-10s%n", 
+                            "ID", "Usuario", "Fecha", "Vencimiento", "Estado", "Monto", "Info");
+            System.out.println("─".repeat(100));
+            
+            for (Factura f : todasFacturas) {
+                System.out.printf("%-5d %-10d %-15s %-12s %-12s $%-14.2f %s%n",
+                    f.getId(),
+                    f.getUserId(),
+                    f.getIssuedAt() != null ? f.getIssuedAt().toLocalDate().toString() : "N/A",
+                    f.getDueDate() != null ? f.getDueDate().toString() : "N/A",
+                    f.getStatus() != null ? f.getStatus() : "N/A",
+                    f.getTotalAmount() != null ? f.getTotalAmount().doubleValue() : 0.0,
+                    f.getLines() != null ? f.getLines().substring(0, Math.min(15, f.getLines().length())) + "..." : ""
+                );
+            }
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener facturas: " + e.getMessage());
+        }
+    }
+
+    private void crearFacturaManual() {
+        try {
+            System.out.println("\n--- CREAR FACTURA MANUAL ---");
+            
+            // Mostrar usuarios disponibles para facturar
+            List<User> usuarios = userService.listAll();
+            
+            System.out.println("\nUsuarios disponibles:");
+            for (int i = 0; i < usuarios.size(); i++) {
+                User u = usuarios.get(i);
+                System.out.println((i + 1) + ") " + u.getFullName() + " (" + u.getEmail() + ")");
+            }
+            
+            System.out.print("\nSeleccione el número del usuario a facturar: ");
+            String seleccion = scanner.nextLine().trim();
+            
+            try {
+                int index = Integer.parseInt(seleccion) - 1;
+                if (index < 0 || index >= usuarios.size()) {
+                    System.out.println("Selección inválida.");
+                    return;
+                }
+                
+                User usuarioFacturar = usuarios.get(index);
+                
+                System.out.print("Ingrese el monto de la factura: $");
+                String montoStr = scanner.nextLine().trim();
+                double monto = Double.parseDouble(montoStr);
+                
+                System.out.print("Ingrese descripción (opcional): ");
+                String descripcion = scanner.nextLine().trim();
+                if (descripcion.isEmpty()) {
+                    descripcion = "Factura manual";
+                }
+                
+                // Crear nueva factura
+                Factura nuevaFactura = new Factura();
+                nuevaFactura.setUserId(usuarioFacturar.getId());
+                nuevaFactura.setIssuedAt(java.time.OffsetDateTime.now());
+                nuevaFactura.setDueDate(java.time.LocalDate.now().plusDays(30));
+                nuevaFactura.setStatus("pendiente");
+                nuevaFactura.setTotalAmount(java.math.BigDecimal.valueOf(monto));
+                nuevaFactura.setLines("{\"description\": \"" + descripcion + "\", \"manual\": true}");
+                
+                Factura facturaGuardada = facturaService.create(nuevaFactura);
+                
+                System.out.println("✅ Factura creada exitosamente:");
+                System.out.println("   • ID: " + facturaGuardada.getId());
+                System.out.println("   • Usuario: " + usuarioFacturar.getFullName());
+                System.out.printf("   • Monto: $%.2f%n", monto);
+                System.out.println("   • Vencimiento: " + nuevaFactura.getDueDate());
+                
+            } catch (NumberFormatException e) {
+                System.out.println("Selección o monto inválido.");
+            }
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al crear factura: " + e.getMessage());
         }
     }
 

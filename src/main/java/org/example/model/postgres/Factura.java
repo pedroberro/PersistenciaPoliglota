@@ -2,6 +2,8 @@ package org.example.model.postgres;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "invoices")
@@ -21,6 +23,7 @@ public class Factura {
 	private String status; // pendiente/pagada/vencida
 	private java.math.BigDecimal totalAmount;
 
-	@Column(columnDefinition = "text")
-	private String linesJson; // simple JSON representation of invoice lines
+	@Column(columnDefinition = "jsonb")
+	@JdbcTypeCode(SqlTypes.JSON)
+	private String lines; // simple JSON representation of invoice lines
 }

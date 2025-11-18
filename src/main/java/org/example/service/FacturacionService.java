@@ -64,7 +64,7 @@ public class FacturacionService {
                 solicitud.getId(),
                 costo.toPlainString()
         );
-        factura.setLinesJson(linesJson);
+        factura.setLines(linesJson);
 
         // 3) Guardar factura
         Factura saved = facturaRepository.save(factura);

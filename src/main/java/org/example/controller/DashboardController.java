@@ -255,7 +255,7 @@ public class DashboardController {
                 factura.setDueDate(java.time.LocalDate.now().plusDays(30));
                 factura.setStatus("pendiente");
                 factura.setTotalAmount(new java.math.BigDecimal("100.50"));
-                factura.setLinesJson("{\"items\": [\"Servicio IoT\"]}");
+                factura.setLines("{\"items\": [\"Servicio IoT\"]}");
 
                 try {
                     facturaService.create(factura);
