@@ -8,8 +8,11 @@ org\example\DTOs\SesionUsuarioDTO.class
 org\example\model\postgres\MovimientoCuenta$MovimientoCuentaBuilder.class
 org\example\service\MedicionService.class
 org\example\service\ReporteService.class
+org\example\config\RedisDataInitializer.class
+org\example\console\ConsoleMenu.class
 org\example\Main.class
 org\example\DTOs\AlertaRegistroDTO.class
+org\example\controller\DashboardController.class
 org\example\config\MongoHealthIndicator.class
 org\example\model\postgres\GroupRepository.class
 org\example\util\SensorTypes.class
@@ -26,6 +29,7 @@ org\example\service\SolicitudProcesoService.class
 org\example\config\WebConfig.class
 org\example\service\SensorService.class
 org\example\model\postgres\Factura.class
+org\example\config\DataSummaryDisplayer.class
 org\example\DTOs\FacturaRegistroDTO.class
 org\example\DTOs\UsuarioBasicoDTO.class
 org\example\DTOs\FacturacionResumenDTO.class
@@ -47,7 +51,9 @@ org\example\DTOs\UsuarioAutenticadoDTO.class
 org\example\config\PostgresHealthIndicator.class
 org\example\repository\postgres\PagoRepository.class
 org\example\repository\mongodb\AlertaRepository.class
+org\example\controller\MedicionController.class
 org\example\repository\postgres\ProcesoRepository.class
+org\example\controller\ReportController.class
 org\example\service\UserService.class
 org\example\model\postgres\CuentaCorriente$CuentaCorrienteBuilder.class
 org\example\repository\postgres\HistorialEjecucionRepository.class

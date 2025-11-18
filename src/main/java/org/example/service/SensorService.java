@@ -21,9 +21,9 @@ public class SensorService {
     }
 
     public Sensor registrar(Sensor s) {
-        if (s.getFechaInicioEmision() == null)
-            s.setFechaInicioEmision(Instant.now());
-        s.setEstado("activo");
+        if (s.getFechaInstalacion() == null)
+            s.setFechaInstalacion(Instant.now());
+        s.setEstado("ACTIVO");
         return repo.save(s);
     }
 
@@ -35,12 +35,12 @@ public class SensorService {
         return repo.findById(id);
     }
 
-    public List<Sensor> obtenerPorCiudad(String ciudad) {
-        return repo.findByCiudad(ciudad);
+    public List<Sensor> obtenerPorUbicacion(String ubicacion) {
+        return repo.findByUbicacion(ubicacion);
     }
 
-    public List<Sensor> obtenerPorPais(String pais) {
-        return repo.findByPais(pais);
+    public List<Sensor> obtenerPorTipo(String tipo) {
+        return repo.findByTipo(tipo);
     }
 
     public List<Sensor> obtenerPorEstado(String estado) {
@@ -51,11 +51,13 @@ public class SensorService {
         return repo.findById(id).map(sensor -> {
             sensor.setNombre(datosActualizados.getNombre());
             sensor.setTipo(datosActualizados.getTipo());
-            sensor.setLatitud(datosActualizados.getLatitud());
-            sensor.setLongitud(datosActualizados.getLongitud());
-            sensor.setCiudad(datosActualizados.getCiudad());
-            sensor.setPais(datosActualizados.getPais());
+            sensor.setUbicacion(datosActualizados.getUbicacion());
+            sensor.setCoordenadas(datosActualizados.getCoordenadas());
             sensor.setEstado(datosActualizados.getEstado());
+            sensor.setModelo(datosActualizados.getModelo());
+            sensor.setConfiguracion(datosActualizados.getConfiguracion());
+            sensor.setPropietario(datosActualizados.getPropietario());
+            sensor.setMetadatos(datosActualizados.getMetadatos());
             return repo.save(sensor);
         }).orElseThrow(() -> new RuntimeException("Sensor no encontrado"));
     }

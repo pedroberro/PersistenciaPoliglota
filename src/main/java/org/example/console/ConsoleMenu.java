@@ -27,8 +27,8 @@ public class ConsoleMenu {
     private Sesion currentSession;
 
     public ConsoleMenu(UserService userService,
-                       SesionService sesionService,
-                       SensorService sensorService) {
+            SesionService sesionService,
+            SensorService sensorService) {
         this.userService = userService;
         this.sesionService = sesionService;
         this.sensorService = sensorService;
@@ -61,7 +61,7 @@ public class ConsoleMenu {
     }
 
     // ======================================================
-    //  MENÚ 1 - USUARIOS Y SESIONES
+    // MENÚ 1 - USUARIOS Y SESIONES
     // ======================================================
     private void menuUsuariosYSesiones() {
         String option;
@@ -144,7 +144,8 @@ public class ConsoleMenu {
         // Pedimos el rol para la sesión (usuario/tecnico/administrador)
         System.out.print("Rol para esta sesión (usuario/tecnico/administrador): ");
         String role = scanner.nextLine().trim();
-        if (role.isBlank()) role = "usuario";
+        if (role.isBlank())
+            role = "usuario";
 
         currentSession = sesionService.createSession(currentUser.getId(), role, "127.0.0.1");
 
@@ -164,7 +165,7 @@ public class ConsoleMenu {
     }
 
     // ======================================================
-    //  MENÚ 2 - SENSORES (MongoDB)
+    // MENÚ 2 - SENSORES (MongoDB)
     // ======================================================
     private void menuSensores() {
         String option;
@@ -173,7 +174,7 @@ public class ConsoleMenu {
             System.out.println("1) Registrar nuevo sensor");
             System.out.println("2) Listar todos los sensores");
             System.out.println("3) Buscar sensor por ID");
-            System.out.println("4) Buscar sensores por ciudad");
+            System.out.println("4) Buscar sensores por ubicación");
             System.out.println("5) Eliminar sensor");
             System.out.println("0) Volver");
             System.out.print("Opción: ");
@@ -184,7 +185,7 @@ public class ConsoleMenu {
                 case "1" -> registrarSensor();
                 case "2" -> listarSensores();
                 case "3" -> buscarSensorPorId();
-                case "4" -> buscarSensoresPorCiudad();
+                case "4" -> buscarSensoresPorUbicacion();
                 case "5" -> eliminarSensor();
                 case "0" -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida.");
@@ -198,8 +199,11 @@ public class ConsoleMenu {
         System.out.print("Nombre/código: ");
         String nombre = scanner.nextLine();
 
-        System.out.print("Tipo de sensor (temperature/humidity): ");
+        System.out.print("Tipo de sensor (TEMPERATURA/HUMEDAD/PRESION/VIBRACION/CALIDAD_AIRE): ");
         String tipo = scanner.nextLine();
+
+        System.out.print("Ubicación: ");
+        String ubicacion = scanner.nextLine();
 
         System.out.print("Latitud (ej: -34.60): ");
         Double lat = leerDoubleNullable();
@@ -207,21 +211,22 @@ public class ConsoleMenu {
         System.out.print("Longitud (ej: -58.38): ");
         Double lon = leerDoubleNullable();
 
-        System.out.print("Ciudad: ");
-        String ciudad = scanner.nextLine();
-
-        System.out.print("País: ");
-        String pais = scanner.nextLine();
+        System.out.print("Modelo: ");
+        String modelo = scanner.nextLine();
 
         Sensor s = new Sensor();
         s.setNombre(nombre);
-        s.setTipo(tipo);
-        s.setLatitud(lat);
-        s.setLongitud(lon);
-        s.setCiudad(ciudad);
-        s.setPais(pais);
-        s.setEstado("activo");
-        s.setFechaInicioEmision(Instant.now());
+        s.setTipo(tipo.toUpperCase());
+        s.setUbicacion(ubicacion);
+
+        Sensor.Coordenadas coords = new Sensor.Coordenadas();
+        coords.setLatitud(lat);
+        coords.setLongitud(lon);
+        s.setCoordenadas(coords);
+
+        s.setModelo(modelo);
+        s.setEstado("ACTIVO");
+        s.setFechaInstalacion(Instant.now());
 
         Sensor guardado = sensorService.registrar(s);
         System.out.println("Sensor registrado con ID: " + guardado.getId());
@@ -240,10 +245,22 @@ public class ConsoleMenu {
             System.out.println("ID: " + s.getId());
             System.out.println("Nombre: " + s.getNombre());
             System.out.println("Tipo: " + s.getTipo());
-            System.out.println("Ciudad: " + s.getCiudad());
-            System.out.println("País: " + s.getPais());
+            System.out.println("Ubicación: " + s.getUbicacion());
+            if (s.getCoordenadas() != null) {
+                System.out.println("Coordenadas: [" + s.getCoordenadas().getLatitud() + ", "
+                        + s.getCoordenadas().getLongitud() + "]");
+            }
+            System.out.println("Modelo: " + s.getModelo());
             System.out.println("Estado: " + s.getEstado());
-            System.out.println("Inicio emisión: " + s.getFechaInicioEmision());
+            System.out.println("Fecha instalación: " + s.getFechaInstalacion());
+            if (s.getPropietario() != null) {
+                System.out.println(
+                        "Propietario: " + s.getPropietario().getNombre() + " (" + s.getPropietario().getEmail() + ")");
+            }
+            if (s.getConfiguracion() != null) {
+                System.out.println("Rango: " + s.getConfiguracion().getRangoMin() + " - "
+                        + s.getConfiguracion().getRangoMax() + " " + s.getConfiguracion().getUnidad());
+            }
         }
         System.out.println("----------------------------------");
         System.out.println("Total: " + sensores.size());
@@ -264,23 +281,39 @@ public class ConsoleMenu {
         System.out.println("ID: " + s.getId());
         System.out.println("Nombre: " + s.getNombre());
         System.out.println("Tipo: " + s.getTipo());
-        System.out.println("Ciudad: " + s.getCiudad());
-        System.out.println("País: " + s.getPais());
+        System.out.println("Ubicación: " + s.getUbicacion());
+        if (s.getCoordenadas() != null) {
+            System.out.println(
+                    "Coordenadas: [" + s.getCoordenadas().getLatitud() + ", " + s.getCoordenadas().getLongitud() + "]");
+        }
+        System.out.println("Modelo: " + s.getModelo());
         System.out.println("Estado: " + s.getEstado());
-        System.out.println("Inicio emisión: " + s.getFechaInicioEmision());
+        System.out.println("Fecha instalación: " + s.getFechaInstalacion());
+        if (s.getPropietario() != null) {
+            System.out.println(
+                    "Propietario: " + s.getPropietario().getNombre() + " (" + s.getPropietario().getEmail() + ")");
+        }
+        if (s.getConfiguracion() != null) {
+            System.out.println("Configuración: " + s.getConfiguracion().getRangoMin() + " - "
+                    + s.getConfiguracion().getRangoMax() + " " + s.getConfiguracion().getUnidad());
+        }
+        if (s.getMetadatos() != null) {
+            System.out.println("Fabricante: " + s.getMetadatos().getFabricante());
+            System.out.println("Número Serie: " + s.getMetadatos().getNumeroSerie());
+        }
     }
 
-    private void buscarSensoresPorCiudad() {
-        System.out.print("\nCiudad: ");
-        String ciudad = scanner.nextLine();
+    private void buscarSensoresPorUbicacion() {
+        System.out.print("\nUbicación: ");
+        String ubicacion = scanner.nextLine();
 
-        List<Sensor> sensores = sensorService.obtenerPorCiudad(ciudad);
+        List<Sensor> sensores = sensorService.obtenerPorUbicacion(ubicacion);
         if (sensores.isEmpty()) {
-            System.out.println("No se encontraron sensores en " + ciudad);
+            System.out.println("No se encontraron sensores en " + ubicacion);
             return;
         }
 
-        System.out.println("\nSensores en " + ciudad + ":");
+        System.out.println("\nSensores en " + ubicacion + ":");
         for (Sensor s : sensores) {
             System.out.printf("- %s | %s | %s%n", s.getId(), s.getNombre(), s.getTipo());
         }
@@ -302,7 +335,8 @@ public class ConsoleMenu {
     // ------------------------------------------------------
     private Double leerDoubleNullable() {
         String input = scanner.nextLine().trim();
-        if (input.isBlank()) return null;
+        if (input.isBlank())
+            return null;
         try {
             return Double.parseDouble(input);
         } catch (NumberFormatException e) {

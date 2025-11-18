@@ -1,6 +1,5 @@
 package org.example.model.postgres;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +22,7 @@ public class CuentaCorriente {
     private Integer usuarioId;
 
     @Column(name = "balance", nullable = false)
+    @Builder.Default
     private BigDecimal saldo = BigDecimal.ZERO;
 
     @Column(name = "currency")
@@ -36,8 +36,10 @@ public class CuentaCorriente {
 
     @PrePersist
     public void prePersist() {
-        if (creadoEn == null) creadoEn = OffsetDateTime.now();
-        if (actualizadoEn == null) actualizadoEn = creadoEn;
+        if (creadoEn == null)
+            creadoEn = OffsetDateTime.now();
+        if (actualizadoEn == null)
+            actualizadoEn = creadoEn;
     }
 
     @PreUpdate
