@@ -17,6 +17,7 @@ org\example\util\EncryptionUtil.class
 org\example\config\PostgresConfig.class
 org\example\repository\mongodb\MedicionRepository.class
 org\example\service\SesionService.class
+org\example\repository\mongodb\AlertaConfiguracionRepository.class
 org\example\service\SolicitudProcesoService.class
 org\example\config\WebConfig.class
 org\example\service\SensorService.class
@@ -40,6 +41,7 @@ org\example\repository\mongodb\AlertaRepository.class
 org\example\repository\postgres\ProcesoRepository.class
 org\example\controller\ReportController.class
 org\example\service\UserService.class
+org\example\model\mongodb\AlertaConfiguracion.class
 org\example\repository\postgres\HistorialEjecucionRepository.class
 org\example\model\postgres\GroupChat.class
 org\example\DTOs\SensorEstadisticasDTO.class

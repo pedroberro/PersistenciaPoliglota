@@ -77,10 +77,12 @@ C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\controller\Dashbo
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\Alerta.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\repository\postgres\UserRepository.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\ControlFuncionamientoRepository.java
+C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\AlertaConfiguracion.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\model\postgres\Proceso.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\model\mongodb\ControlFuncionamiento.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\service\AlertaService.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\config\AuthInterceptor.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\console\ConsoleMenu.java
+C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\repository\mongodb\AlertaConfiguracionRepository.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\service\MedicionService.java
 C:\Users\drope\PersistenciaPoliglota\src\main\java\org\example\config\PostgreSQLDataInitializer.java
