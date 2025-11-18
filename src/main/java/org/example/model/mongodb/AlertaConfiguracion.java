@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Document(collection = "alert_configurations")
 @Data
@@ -29,8 +29,8 @@ public class AlertaConfiguracion {
     
     // Configuración
     private Boolean active; // si está activa o no
-    private OffsetDateTime createdAt;
-    private OffsetDateTime lastTriggered;
+    private Instant createdAt;
+    private Instant lastTriggered;
     
     // Acciones
     private Boolean sendNotification;

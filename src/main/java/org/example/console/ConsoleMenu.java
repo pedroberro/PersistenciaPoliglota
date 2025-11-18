@@ -388,7 +388,7 @@ public class ConsoleMenu {
             if (currentUser != null) {
                 System.out.println("Usuario: " + currentUser.getFullName());
             } else {
-                System.out.println("⚠️ Debe iniciar sesión para usar mensajes");
+                System.out.println(" Debe iniciar sesión para usar mensajes");
                 System.out.println("0) Volver al menú principal");
                 System.out.print("Opción: ");
                 scanner.nextLine();
@@ -494,7 +494,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener mensajes: " + e.getMessage());
+            System.out.println(" Error al obtener mensajes: " + e.getMessage());
         }
     }
 
@@ -536,7 +536,7 @@ public class ConsoleMenu {
             if (currentUser != null) {
                 System.out.println("Usuario: " + currentUser.getFullName());
             } else {
-                System.out.println("⚠️ Debe iniciar sesión para ver facturación");
+                System.out.println(" Debe iniciar sesión para ver facturación");
                 System.out.println("0) Volver al menú principal");
                 System.out.print("Opción: ");
                 scanner.nextLine();
@@ -592,7 +592,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener facturas: " + e.getMessage());
+            System.out.println(" Error al obtener facturas: " + e.getMessage());
         }
     }
 
@@ -612,7 +612,7 @@ public class ConsoleMenu {
                 .mapToDouble(f -> f.getTotalAmount().doubleValue())
                 .sum();
             
-            System.out.println("\n📊 Estadísticas generales:");
+            System.out.println("\nEstadísticas generales:");
             System.out.println("   • Total de facturas en sistema: " + totalFacturas);
             System.out.println("   • Facturas pendientes: " + facturasPendientes);
             System.out.println("   • Facturas pagadas: " + facturasPagadas);
@@ -628,7 +628,7 @@ public class ConsoleMenu {
             System.out.println("   • Facturas pendientes: " + misPendientes);
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener resumen: " + e.getMessage());
+            System.out.println(" Error al obtener resumen: " + e.getMessage());
         }
     }
 
@@ -643,7 +643,7 @@ public class ConsoleMenu {
                 return;
             }
             
-            System.out.println("\n📄 Todas las facturas (" + todasFacturas.size() + " facturas):");
+            System.out.println("\nTodas las facturas (" + todasFacturas.size() + " facturas):");
             System.out.println("─".repeat(100));
             System.out.printf("%-5s %-10s %-15s %-12s %-12s %-15s %-10s%n", 
                             "ID", "Usuario", "Fecha", "Vencimiento", "Estado", "Monto", "Info");
@@ -662,7 +662,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener facturas: " + e.getMessage());
+            System.out.println("Error al obtener facturas: " + e.getMessage());
         }
     }
 
@@ -712,7 +712,7 @@ public class ConsoleMenu {
                 
                 Factura facturaGuardada = facturaService.create(nuevaFactura);
                 
-                System.out.println("✅ Factura creada exitosamente:");
+                System.out.println(" Factura creada exitosamente:");
                 System.out.println("   • ID: " + facturaGuardada.getId());
                 System.out.println("   • Usuario: " + usuarioFacturar.getFullName());
                 System.out.printf("   • Monto: $%.2f%n", monto);
@@ -723,7 +723,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al crear factura: " + e.getMessage());
+            System.out.println(" Error al crear factura: " + e.getMessage());
         }
     }
 
@@ -738,7 +738,7 @@ public class ConsoleMenu {
             if (currentUser != null) {
                 System.out.println("Usuario: " + currentUser.getFullName());
             } else {
-                System.out.println("⚠️ Debe iniciar sesión para usar procesos");
+                System.out.println(" Debe iniciar sesión para usar procesos");
                 System.out.println("0) Volver al menú principal");
                 System.out.print("Opción: ");
                 scanner.nextLine();
@@ -780,7 +780,7 @@ public class ConsoleMenu {
                 return;
             }
             
-            System.out.println("\n📋 Procesos disponibles (" + procesos.size() + " procesos):");
+            System.out.println("\n Procesos disponibles (" + procesos.size() + " procesos):");
             System.out.println("─".repeat(100));
             System.out.printf("%-5s %-25s %-40s %-15s %-10s%n", 
                             "ID", "Nombre", "Descripción", "Tipo", "Costo");
@@ -802,7 +802,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener procesos: " + e.getMessage());
+            System.out.println(" Error al obtener procesos: " + e.getMessage());
         }
     }
 
@@ -864,7 +864,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al solicitar proceso: " + e.getMessage());
+            System.out.println(" Error al solicitar proceso: " + e.getMessage());
         }
     }
 
@@ -879,7 +879,7 @@ public class ConsoleMenu {
                 return;
             }
             
-            System.out.println("\n📋 Sus solicitudes (" + solicitudes.size() + " solicitudes):");
+            System.out.println("\n Sus solicitudes (" + solicitudes.size() + " solicitudes):");
             System.out.println("─".repeat(120));
             System.out.printf("%-5s %-25s %-40s %-15s %-20s %-10s%n", 
                             "ID", "Proceso", "Parámetros", "Estado", "Fecha", "Costo");
@@ -897,7 +897,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener solicitudes: " + e.getMessage());
+            System.out.println(" Error al obtener solicitudes: " + e.getMessage());
         }
     }
 
@@ -912,7 +912,7 @@ public class ConsoleMenu {
                 return;
             }
             
-            System.out.println("\n📜 Historial de ejecuciones (" + historial.size() + " registros):");
+            System.out.println("\n Historial de ejecuciones (" + historial.size() + " registros):");
             System.out.println("─".repeat(100));
             System.out.printf("%-5s %-25s %-20s %-15s %-30s%n", 
                             "ID", "Proceso", "Fecha Ejecución", "Estado", "Resultado");
@@ -929,7 +929,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener historial: " + e.getMessage());
+            System.out.println(" Error al obtener historial: " + e.getMessage());
         }
     }
 
@@ -937,13 +937,29 @@ public class ConsoleMenu {
         try {
             System.out.println("\n--- EJECUTAR PROCESO PENDIENTE ---");
             
-            List<SolicitudProceso> solicitudesPendientes = solicitudProcesoService.listByUser(currentUser.getId())
+            // DEBUG: Información del usuario actual
+            System.out.println(" DEBUG - Usuario actual ID: " + currentUser.getId());
+            
+            List<SolicitudProceso> todasLasSolicitudes = solicitudProcesoService.listByUser(currentUser.getId());
+            System.out.println(" DEBUG - Total solicitudes encontradas: " + todasLasSolicitudes.size());
+            
+            // DEBUG: Mostrar todas las solicitudes y sus estados
+            for (SolicitudProceso s : todasLasSolicitudes) {
+                System.out.println(" DEBUG - Solicitud ID: " + s.getId() + ", Estado: '" + s.getStatus() + "', Proceso: " + 
+                    (s.getProceso() != null ? s.getProceso().getName() : "NULL"));
+            }
+            
+            List<SolicitudProceso> solicitudesPendientes = todasLasSolicitudes
                 .stream()
-                .filter(s -> "pending".equals(s.getStatus()))
+                .filter(s -> s.getStatus() != null && 
+                           (s.getStatus().equalsIgnoreCase("pending") || s.getStatus().equalsIgnoreCase("PENDING")))
                 .toList();
+            
+            System.out.println(" DEBUG - Solicitudes pendientes filtradas: " + solicitudesPendientes.size());
             
             if (solicitudesPendientes.isEmpty()) {
                 System.out.println("No tiene procesos pendientes de ejecución.");
+                System.out.println("💡 TIP: Verifique que tenga solicitudes con estado 'PENDING' en el menú 'Ver mis solicitudes'");
                 return;
             }
             
@@ -966,32 +982,102 @@ public class ConsoleMenu {
                 
                 SolicitudProceso solicitudEjecutar = solicitudesPendientes.get(index);
                 
-                // Extraer parámetros (simplificado para el ejemplo)
-                String[] params = solicitudEjecutar.getParameters().split(",");
-                String city = "Buenos Aires"; // valor por defecto
-                String from = "2025-01-01T00:00:00Z";
-                String to = "2025-12-31T23:59:59Z";
+                // Extraer parámetros JSON
+                String parametros = solicitudEjecutar.getParameters();
+                String city = null; // NO usar valor por defecto
+                String from = "2024-01-01T00:00:00Z";
+                String to = "2024-12-31T23:59:59Z";
                 
-                for (String param : params) {
-                    if (param.trim().startsWith("city=")) {
-                        city = param.trim().substring(5);
-                    } else if (param.trim().startsWith("from=")) {
-                        from = param.trim().substring(5);
-                    } else if (param.trim().startsWith("to=")) {
-                        to = param.trim().substring(3);
+                System.out.println("🔍 DEBUG - Parámetros recibidos: " + parametros);
+                
+                // Parsear parámetros (JSON o formato texto plano)
+                if (parametros != null && !parametros.trim().isEmpty()) {
+                    try {
+                        // Detectar si es JSON o formato texto plano
+                        if (parametros.trim().startsWith("{")) {
+                            // Formato JSON: {"ciudad": "Buenos Aires"}
+                            city = extractJsonValue(parametros, "ciudad");
+                            if (city == null) {
+                                city = extractJsonValue(parametros, "city");
+                            }
+                            
+                            String fromParam = extractJsonValue(parametros, "from");
+                            if (fromParam != null) {
+                                from = fromParam;
+                            }
+                            
+                            String toParam = extractJsonValue(parametros, "to");
+                            if (toParam != null) {
+                                to = toParam;
+                            }
+                        } else {
+                            // Formato texto plano: city=Buenos Aires, from=2025-01-01T00:00:00Z
+                            city = extractKeyValuePair(parametros, "city");
+                            if (city == null) {
+                                city = extractKeyValuePair(parametros, "ciudad");
+                            }
+                            
+                            String fromParam = extractKeyValuePair(parametros, "from");
+                            if (fromParam != null) {
+                                from = fromParam;
+                            }
+                            
+                            String toParam = extractKeyValuePair(parametros, "to");
+                            if (toParam != null) {
+                                to = toParam;
+                            }
+                        }
+                        
+                    } catch (Exception e) {
+                        System.out.println("⚠️ Error parseando parámetros: " + e.getMessage());
                     }
                 }
                 
-                System.out.println("🔄 Ejecutando proceso...");
-                System.out.println("   • Ciudad: " + city);
-                System.out.println("   • Desde: " + from);
-                System.out.println("   • Hasta: " + to);
+                // Validar que se haya especificado una ciudad
+                if (city == null || city.trim().isEmpty()) {
+                    System.out.println("❌ ERROR: No se especificó una ciudad válida en los parámetros");
+                    System.out.println("   Parámetros recibidos: " + parametros);
+                    System.out.println("   Se requiere el parámetro 'ciudad' o 'city' en formato JSON");
+                    return;
+                }
                 
-                // Ejecutar el reporte
-                HistorialEjecucion resultado = reporteService.runTemperatureReport(
-                    city, from, to, solicitudEjecutar.getId());
+                // Determinar qué tipo de proceso ejecutar basado en el nombre
+                String nombreProceso = solicitudEjecutar.getProceso() != null ? 
+                                     solicitudEjecutar.getProceso().getName() : "";
                 
-                System.out.println("✅ Proceso ejecutado exitosamente:");
+                HistorialEjecucion resultado = null;
+                
+                String nombreLowerCase = nombreProceso.toLowerCase();
+                
+                if (nombreLowerCase.contains("temperatura") || nombreLowerCase.contains("temp")) {
+                    System.out.println(" Ejecutando proceso de análisis de temperatura...");
+                    System.out.println("   • Proceso: " + nombreProceso);
+                    System.out.println("   • Ciudad: " + city);
+                    System.out.println("   • Desde: " + from);
+                    System.out.println("   • Hasta: " + to);
+                    
+                    resultado = reporteService.runTemperatureReport(
+                        city, from, to, solicitudEjecutar.getId());
+                        
+                } else if (nombreLowerCase.contains("humedad") || nombreLowerCase.contains("hum")) {
+                    System.out.println("🔄 Ejecutando proceso de análisis de humedad...");
+                    System.out.println("   • Proceso: " + nombreProceso);
+                    System.out.println("   • Ciudad: " + city);
+                    System.out.println("   • Desde: " + from);
+                    System.out.println("   • Hasta: " + to);
+                    
+                    resultado = reporteService.runHumidityReport(
+                        city, from, to, solicitudEjecutar.getId());
+                        
+                } else {
+                    System.out.println(" Tipo de proceso no soportado: " + nombreProceso);
+                    System.out.println("   Los procesos soportados son:");
+                    System.out.println("   • Reportes de Temperatura (contiene 'temperatura' o 'temp')");
+                    System.out.println("   • Reportes de Humedad (contiene 'humedad' o 'hum')");
+                    return;
+                }
+                
+                System.out.println(" Proceso ejecutado exitosamente:");
                 System.out.println("   • ID de ejecución: " + resultado.getId());
                 System.out.println("   • Estado: " + resultado.getStatus());
                 System.out.println("   • Resultado: " + truncateString(resultado.getResultJson(), 50));
@@ -1001,7 +1087,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al ejecutar proceso: " + e.getMessage());
+            System.out.println("Error al ejecutar proceso: " + e.getMessage());
         }
     }
 
@@ -1048,7 +1134,7 @@ public class ConsoleMenu {
             
             Proceso procesoGuardado = procesoService.create(nuevoProceso);
             
-            System.out.println("✅ Proceso creado exitosamente:");
+            System.out.println("Proceso creado exitosamente:");
             System.out.println("   • ID: " + procesoGuardado.getId());
             System.out.println("   • Nombre: " + procesoGuardado.getName());
             System.out.println("   • Tipo: " + procesoGuardado.getProcessType());
@@ -1058,7 +1144,7 @@ public class ConsoleMenu {
         } catch (NumberFormatException e) {
             System.out.println("Costo inválido.");
         } catch (Exception e) {
-            System.out.println("❌ Error al crear proceso: " + e.getMessage());
+            System.out.println("Error al crear proceso: " + e.getMessage());
         }
     }
 
@@ -1073,7 +1159,7 @@ public class ConsoleMenu {
             if (currentUser != null) {
                 System.out.println("Usuario: " + currentUser.getFullName());
             } else {
-                System.out.println("⚠️ Debe iniciar sesión para usar alertas");
+                System.out.println(" Debe iniciar sesión para usar alertas");
                 System.out.println("0) Volver al menú principal");
                 System.out.print("Opción: ");
                 scanner.nextLine();
@@ -1108,10 +1194,17 @@ public class ConsoleMenu {
         try {
             System.out.println("\n--- ALERTAS ACTIVAS ---");
             
+            // DEBUG: Información antes de la consulta
+            System.out.println("DEBUG - Consultando alertas activas...");
+            
             List<Alerta> alertasActivas = alertaService.obtenerAlertasActivas();
+            
+            // DEBUG: Información después de la consulta
+            System.out.println(" DEBUG - Alertas activas encontradas: " + alertasActivas.size());
             
             if (alertasActivas.isEmpty()) {
                 System.out.println("✅ No hay alertas activas en el sistema.");
+                System.out.println("💡 TIP: Las alertas se generan automáticamente cuando los sensores reportan mediciones fuera de los umbrales configurados.");
                 return;
             }
             
@@ -1133,7 +1226,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener alertas activas: " + e.getMessage());
+            System.out.println("Error al obtener alertas activas: " + e.getMessage());
         }
     }
 
@@ -1141,10 +1234,18 @@ public class ConsoleMenu {
         try {
             System.out.println("\n--- MIS CONFIGURACIONES DE ALERTA ---");
             
+            // DEBUG: Información del usuario actual
+            System.out.println("🔍 DEBUG - Usuario actual ID: " + currentUser.getId());
+            System.out.println("🔍 DEBUG - Usuario actual Email: " + currentUser.getEmail());
+            
             List<AlertaConfiguracion> configuraciones = alertaService.obtenerConfiguracionesPorUsuario(currentUser.getId());
+            
+            // DEBUG: Información de la consulta
+            System.out.println("🔍 DEBUG - Configuraciones encontradas: " + configuraciones.size());
             
             if (configuraciones.isEmpty()) {
                 System.out.println("No tiene configuraciones de alerta creadas.");
+                System.out.println("💡 TIP: Puede crear una nueva configuración con la opción 'Crear configuración de alerta'");
                 return;
             }
             
@@ -1169,7 +1270,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener configuraciones: " + e.getMessage());
+            System.out.println("Error al obtener configuraciones: " + e.getMessage());
         }
     }
 
@@ -1308,7 +1409,7 @@ public class ConsoleMenu {
                 
                 alertaService.activarDesactivarConfiguracion(configSeleccionada.getId(), nuevoEstado);
                 
-                System.out.println("✅ Configuración " + (nuevoEstado ? "ACTIVADA" : "DESACTIVADA") + 
+                System.out.println("Configuración " + (nuevoEstado ? "ACTIVADA" : "DESACTIVADA") + 
                     " exitosamente: " + configSeleccionada.getName());
                 
             } catch (NumberFormatException e) {
@@ -1316,7 +1417,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al cambiar configuración: " + e.getMessage());
+            System.out.println(" Error al cambiar configuración: " + e.getMessage());
         }
     }
 
@@ -1362,7 +1463,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al resolver alerta: " + e.getMessage());
+            System.out.println(" Error al resolver alerta: " + e.getMessage());
         }
     }
 
@@ -1377,7 +1478,7 @@ public class ConsoleMenu {
                 return;
             }
             
-            System.out.println("\n📜 Historial completo (" + todasLasAlertas.size() + " alertas):");
+            System.out.println("\n Historial completo (" + todasLasAlertas.size() + " alertas):");
             System.out.println("─".repeat(130));
             System.out.printf("%-20s %-15s %-15s %-15s %-45s %-20s%n", 
                             "ID", "Tipo", "Sensor", "Estado", "Descripción", "Fecha");
@@ -1396,7 +1497,7 @@ public class ConsoleMenu {
             }
             
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener historial: " + e.getMessage());
+            System.out.println(" Error al obtener historial: " + e.getMessage());
         }
     }
 
@@ -1419,5 +1520,72 @@ public class ConsoleMenu {
         if (str == null) return "N/A";
         if (str.length() <= maxLength) return str;
         return str.substring(0, maxLength - 3) + "...";
+    }
+    
+    /**
+     * Extrae un valor de un JSON simple dado un key.
+     * Ejemplo: extractJsonValue('{"ciudad": "Madrid", "codigo": 123}', "ciudad") -> "Madrid"
+     */
+    private String extractJsonValue(String json, String key) {
+        if (json == null || key == null) return null;
+        
+        String searchPattern = "\"" + key + "\"";
+        int keyIndex = json.indexOf(searchPattern);
+        if (keyIndex == -1) return null;
+        
+        // Buscar el inicio del valor después de ":"
+        int colonIndex = json.indexOf(":", keyIndex);
+        if (colonIndex == -1) return null;
+        
+        // Saltar espacios y encontrar el inicio del valor
+        int valueStart = colonIndex + 1;
+        while (valueStart < json.length() && Character.isWhitespace(json.charAt(valueStart))) {
+            valueStart++;
+        }
+        
+        if (valueStart >= json.length()) return null;
+        
+        // Si el valor está entre comillas
+        if (json.charAt(valueStart) == '"') {
+            valueStart++; // Saltar la comilla inicial
+            int valueEnd = json.indexOf("\"", valueStart);
+            if (valueEnd == -1) return null;
+            return json.substring(valueStart, valueEnd);
+        } else {
+            // Valor sin comillas (número, boolean, etc.) - buscar hasta coma o cierre
+            int valueEnd = valueStart;
+            while (valueEnd < json.length()) {
+                char c = json.charAt(valueEnd);
+                if (c == ',' || c == '}' || c == ']' || Character.isWhitespace(c)) {
+                    break;
+                }
+                valueEnd++;
+            }
+            return json.substring(valueStart, valueEnd).trim();
+        }
+    }
+    
+    /**
+     * Extrae un valor de un formato key=value separado por comas.
+     * Ejemplo: extractKeyValuePair("city=Buenos Aires, from=2025-01-01T00:00:00Z", "city") -> "Buenos Aires"
+     */
+    private String extractKeyValuePair(String text, String key) {
+        if (text == null || key == null) return null;
+        
+        String searchPattern = key + "=";
+        int keyIndex = text.indexOf(searchPattern);
+        if (keyIndex == -1) return null;
+        
+        // Inicio del valor después de "key="
+        int valueStart = keyIndex + searchPattern.length();
+        
+        // Buscar el final del valor (hasta coma o final de string)
+        int valueEnd = text.indexOf(",", valueStart);
+        if (valueEnd == -1) {
+            valueEnd = text.length(); // Si no hay coma, tomar hasta el final
+        }
+        
+        String value = text.substring(valueStart, valueEnd).trim();
+        return value.isEmpty() ? null : value;
     }
 }

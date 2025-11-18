@@ -2,7 +2,7 @@ package org.example.model.postgres;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "process_requests")
@@ -22,7 +22,14 @@ public class SolicitudProceso {
     @JoinColumn(name = "process_id")
     private Proceso proceso;
 
-    private String parameters; // Ejemplo: "city=Buenos Aires, from=2025-10-01, to=2025-10-10"
-    private LocalDateTime requestDate;
-    private String status; // "pending", "completed"
+    @Column(name = "params")
+    private String parameters; // JSON como string
+    
+    @Column(name = "requested_at")
+    private OffsetDateTime requestDate;
+    
+    private String status; // "PENDING", "COMPLETED"
+    
+    @Column(name = "result_location")
+    private String resultLocation;
 }

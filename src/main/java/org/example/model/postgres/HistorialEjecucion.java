@@ -2,7 +2,7 @@ package org.example.model.postgres;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "execution_history")
@@ -18,9 +18,14 @@ public class HistorialEjecucion {
     @JoinColumn(name = "request_id")
     private SolicitudProceso solicitud;
 
-    private LocalDateTime executionDate;
+    @Column(name = "executed_at")
+    private OffsetDateTime executionDate;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "result_summary", columnDefinition = "TEXT")
     private String resultJson; // resultado en formato JSON del reporte generado
-    private String status;     // "ok", "error"
+    
+    @Column(name = "result_status")
+    private String status;     // "completed", "failed", "no_data"
+    
+    private String logs;       // logs adicionales
 }

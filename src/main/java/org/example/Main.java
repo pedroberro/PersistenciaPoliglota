@@ -1,3 +1,4 @@
+
 package org.example;
 
 import org.example.console.ConsoleMenu;

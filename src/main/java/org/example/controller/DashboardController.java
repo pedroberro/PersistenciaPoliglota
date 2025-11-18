@@ -41,7 +41,7 @@ public class DashboardController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getDashboardData() {
         try {
-            // 📊 DATOS REALES DE TODAS LAS BASES DE DATOS
+            // DATOS REALES DE TODAS LAS BASES DE DATOS
             long totalUsers = userService.listAll().size();
             long activeSensors = sensorService.listarTodos().stream()
                     .filter(s -> "activo".equalsIgnoreCase(s.getEstado())).count();

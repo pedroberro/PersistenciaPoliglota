@@ -3,7 +3,7 @@ package org.example.service;
 import org.example.model.postgres.SolicitudProceso;
 import org.example.repository.postgres.SolicitudProcesoRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -15,8 +15,8 @@ public class SolicitudProcesoService {
     }
 
     public SolicitudProceso request(SolicitudProceso s) {
-        s.setRequestDate(LocalDateTime.now());
-        s.setStatus("pending");
+        s.setRequestDate(OffsetDateTime.now());
+        s.setStatus("PENDING");
         return repo.save(s);
     }
 
@@ -26,7 +26,7 @@ public class SolicitudProcesoService {
 
     public SolicitudProceso markCompleted(Integer id) {
         SolicitudProceso s = repo.findById(id).orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
-        s.setStatus("completed");
+        s.setStatus("COMPLETED");
         return repo.save(s);
     }
 }

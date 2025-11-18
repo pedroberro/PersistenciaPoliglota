@@ -1,16 +1,21 @@
 package org.example.model.mongodb;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.Instant;
 
+@Document(collection = "alertas")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Alerta {
+    @Id
     private String id;
     private String type; // sensor | climatica
     private String sensorId; // optional
-    private java.time.OffsetDateTime createdAt;
+    private Instant createdAt; // Usar Instant en lugar de OffsetDateTime para mejor compatibilidad con MongoDB
     private String description;
     private String status; // activa | resuelta
-    private java.time.OffsetDateTime resolvedAt;
+    private Instant resolvedAt; // Usar Instant en lugar de OffsetDateTime
 }

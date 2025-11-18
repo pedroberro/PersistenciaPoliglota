@@ -3,7 +3,7 @@ spring:
     active: default
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/app
     username: postgres
     password: juegos02
     driver-class-name: org.postgresql.Driver
@@ -32,13 +32,13 @@ spring:
 
 logging:
   level:
-    root: WARN
-    '[org.springframework]': ERROR
-    '[org.hibernate]': ERROR
-    '[com.zaxxer.hikari]': ERROR
-    '[org.mongodb.driver]': ERROR
-    '[io.netty]': ERROR
-    '[org.example]': INFO  # Solo mostrar logs de nuestra aplicación
+    '[org.springframework.jdbc.core.JdbcTemplate]': WARN
+    '[org.hibernate.SQL]': WARN
+    '[org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration]': WARN
+    '[org.mongodb.driver.cluster]': WARN
+    '[org.mongodb.driver.connection]': WARN
+    '[org.hibernate.type]': WARN
+    '[org.hibernate.stat]': WARN
 
 # Configuración para desarrollo local sin Docker
 ---

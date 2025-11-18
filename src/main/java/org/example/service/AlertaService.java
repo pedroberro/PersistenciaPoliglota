@@ -7,7 +7,7 @@ import org.example.repository.mongodb.AlertaRepository;
 import org.example.repository.mongodb.AlertaConfiguracionRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -25,13 +25,21 @@ public class AlertaService {
     // ===== GESTIÓN DE CONFIGURACIONES DE ALERTAS =====
 
     public AlertaConfiguracion crearConfiguracionAlerta(AlertaConfiguracion config) {
-        config.setCreatedAt(OffsetDateTime.now());
+        config.setCreatedAt(Instant.now());
         config.setActive(true);
         return alertaConfiguracionRepository.save(config);
     }
 
     public List<AlertaConfiguracion> obtenerConfiguracionesPorUsuario(Integer userId) {
-        return alertaConfiguracionRepository.findByUserId(userId);
+        System.out.println("🔍 AlertaService DEBUG - Buscando configuraciones para userId: " + userId);
+        List<AlertaConfiguracion> resultado = alertaConfiguracionRepository.findByUserId(userId);
+        System.out.println("🔍 AlertaService DEBUG - Configuraciones encontradas: " + resultado.size());
+        
+        for (AlertaConfiguracion config : resultado) {
+            System.out.println("🔍 AlertaService DEBUG - Config: " + config.getName() + " (ID: " + config.getId() + ", UserID: " + config.getUserId() + ")");
+        }
+        
+        return resultado;
     }
 
     public List<AlertaConfiguracion> obtenerConfiguracionesActivas() {
@@ -125,7 +133,7 @@ public class AlertaService {
         Alerta alerta = new Alerta();
         alerta.setType("climatica");
         alerta.setSensorId(medicion.getSensorId());
-        alerta.setCreatedAt(OffsetDateTime.now());
+        alerta.setCreatedAt(Instant.now());
         alerta.setDescription(descripcion);
         alerta.setStatus("activa");
 
@@ -133,7 +141,7 @@ public class AlertaService {
         alertaRepository.save(alerta);
 
         // Actualizar timestamp de última activación en la configuración
-        config.setLastTriggered(OffsetDateTime.now());
+        config.setLastTriggered(Instant.now());
         alertaConfiguracionRepository.save(config);
 
         // Acciones configuradas
@@ -157,7 +165,15 @@ public class AlertaService {
     // ===== GESTIÓN DE ALERTAS GENERADAS =====
 
     public List<Alerta> obtenerAlertasActivas() {
-        return alertaRepository.findByStatus("activa");
+        System.out.println("🔍 AlertaService DEBUG - Buscando alertas con status 'activa'");
+        List<Alerta> resultado = alertaRepository.findByStatus("activa");
+        System.out.println("🔍 AlertaService DEBUG - Alertas activas encontradas: " + resultado.size());
+        
+        for (Alerta alerta : resultado) {
+            System.out.println("🔍 AlertaService DEBUG - Alerta: " + alerta.getDescription() + " (Status: " + alerta.getStatus() + ")");
+        }
+        
+        return resultado;
     }
 
     public List<Alerta> obtenerTodasLasAlertas() {
@@ -169,7 +185,7 @@ public class AlertaService {
             .orElseThrow(() -> new RuntimeException("Alerta no encontrada"));
         
         alerta.setStatus("resuelta");
-        alerta.setResolvedAt(OffsetDateTime.now());
+        alerta.setResolvedAt(Instant.now());
         
         return alertaRepository.save(alerta);
     }
