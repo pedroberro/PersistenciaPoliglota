@@ -6,6 +6,8 @@ import org.example.model.redis.Sesion;
 import org.example.service.SensorService;
 import org.example.service.UserService;
 import org.example.service.SesionService;
+import org.example.service.MessageService;
+import org.example.DTOs.MensajeUsuarioDTO;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -19,6 +21,7 @@ public class ConsoleMenu {
     private final UserService userService;
     private final SesionService sesionService;
     private final SensorService sensorService;
+    private final MessageService messageService;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -28,10 +31,12 @@ public class ConsoleMenu {
 
     public ConsoleMenu(UserService userService,
             SesionService sesionService,
-            SensorService sensorService) {
+            SensorService sensorService,
+            MessageService messageService) {
         this.userService = userService;
         this.sesionService = sesionService;
         this.sensorService = sensorService;
+        this.messageService = messageService;
     }
 
     // 🔹 Punto de entrada del menú
@@ -46,6 +51,7 @@ public class ConsoleMenu {
             System.out.println("------------------------------------");
             System.out.println("1) Usuarios y sesiones");
             System.out.println("2) Sensores");
+            System.out.println("3) Mensajes");
             System.out.println("0) Salir");
             System.out.print("Opción: ");
 
@@ -54,6 +60,7 @@ public class ConsoleMenu {
             switch (option) {
                 case "1" -> menuUsuariosYSesiones();
                 case "2" -> menuSensores();
+                case "3" -> menuMensajes();
                 case "0" -> System.out.println("Saliendo de la aplicación...");
                 default -> System.out.println("Opción inválida, intente nuevamente.");
             }
@@ -327,6 +334,154 @@ public class ConsoleMenu {
             System.out.println("Sensor eliminado.");
         } catch (Exception e) {
             System.out.println("Error al eliminar: " + e.getMessage());
+        }
+    }
+
+    // ======================================================
+    // MENÚ 3 - MENSAJES
+    // ======================================================
+    private void menuMensajes() {
+        String option;
+        do {
+            System.out.println("\n----- MENSAJES -----");
+            
+            if (currentUser != null) {
+                System.out.println("Usuario: " + currentUser.getFullName());
+            } else {
+                System.out.println("⚠️ Debe iniciar sesión para usar mensajes");
+                System.out.println("0) Volver al menú principal");
+                System.out.print("Opción: ");
+                scanner.nextLine();
+                return;
+            }
+            
+            System.out.println("1) Enviar mensaje");
+            System.out.println("2) Ver mensajes recibidos");
+            System.out.println("3) Ver mensajes enviados");
+            System.out.println("0) Volver al menú principal");
+            System.out.print("Opción: ");
+
+            option = scanner.nextLine().trim();
+
+            switch (option) {
+                case "1" -> enviarMensaje();
+                case "2" -> verMensajesRecibidos();
+                case "3" -> verMensajesEnviados();
+                case "0" -> System.out.println("Volviendo al menú principal...");
+                default -> System.out.println("Opción inválida.");
+            }
+        } while (!"0".equals(option));
+    }
+
+    private void enviarMensaje() {
+        try {
+            System.out.println("\n--- ENVIAR MENSAJE ---");
+            
+            // Mostrar usuarios disponibles
+            List<User> usuarios = userService.listAll();
+            usuarios = usuarios.stream()
+                    .filter(u -> !u.getId().equals(currentUser.getId())) // Excluir usuario actual
+                    .toList();
+            
+            if (usuarios.isEmpty()) {
+                System.out.println("No hay otros usuarios disponibles.");
+                return;
+            }
+            
+            System.out.println("\nUsuarios disponibles:");
+            for (int i = 0; i < usuarios.size(); i++) {
+                User u = usuarios.get(i);
+                System.out.println((i + 1) + ") " + u.getFullName() + " (" + u.getEmail() + ")");
+            }
+            
+            System.out.print("\nSeleccione el número del destinatario: ");
+            String seleccion = scanner.nextLine().trim();
+            
+            try {
+                int index = Integer.parseInt(seleccion) - 1;
+                if (index < 0 || index >= usuarios.size()) {
+                    System.out.println("Selección inválida.");
+                    return;
+                }
+                
+                User destinatario = usuarios.get(index);
+                
+                System.out.print("Escriba su mensaje: ");
+                String contenido = scanner.nextLine().trim();
+                
+                if (contenido.isEmpty()) {
+                    System.out.println("El mensaje no puede estar vacío.");
+                    return;
+                }
+                
+                MensajeUsuarioDTO mensaje = messageService.sendPrivate(
+                    currentUser.getId(), 
+                    destinatario.getId(), 
+                    contenido
+                );
+                
+                System.out.println("✅ Mensaje enviado a " + destinatario.getFullName());
+                
+            } catch (NumberFormatException e) {
+                System.out.println("Selección inválida.");
+            }
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al enviar mensaje: " + e.getMessage());
+        }
+    }
+
+    private void verMensajesRecibidos() {
+        try {
+            System.out.println("\n--- MENSAJES RECIBIDOS ---");
+            
+            List<MensajeUsuarioDTO> mensajes = messageService.inbox(currentUser.getId());
+            
+            if (mensajes.isEmpty()) {
+                System.out.println("No tiene mensajes recibidos.");
+                return;
+            }
+            
+            System.out.println("\n📬 Bandeja de entrada (" + mensajes.size() + " mensajes):");
+            System.out.println("─".repeat(70));
+            
+            for (int i = 0; i < mensajes.size(); i++) {
+                MensajeUsuarioDTO msg = mensajes.get(i);
+                System.out.printf("%d) De: %s%n", (i + 1), msg.senderName());
+                System.out.printf("   Fecha: %s%n", msg.timestamp());
+                System.out.printf("   Mensaje: %s%n", msg.content());
+                System.out.println("   " + "─".repeat(60));
+            }
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener mensajes: " + e.getMessage());
+        }
+    }
+
+    private void verMensajesEnviados() {
+        try {
+            System.out.println("\n--- MENSAJES ENVIADOS ---");
+            
+            List<MensajeUsuarioDTO> mensajes = messageService.sentBy(currentUser.getId());
+            
+            if (mensajes.isEmpty()) {
+                System.out.println("No ha enviado mensajes.");
+                return;
+            }
+            
+            System.out.println("\n📤 Mensajes enviados (" + mensajes.size() + " mensajes):");
+            System.out.println("─".repeat(70));
+            
+            for (int i = 0; i < mensajes.size(); i++) {
+                MensajeUsuarioDTO msg = mensajes.get(i);
+                System.out.printf("%d) Para: %s%n", (i + 1), msg.recipientUserName());
+                System.out.printf("   Fecha: %s%n", msg.timestamp());
+                System.out.printf("   Mensaje: %s%n", msg.content());
+                System.out.println("   " + "─".repeat(60));
+            }
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener mensajes: " + e.getMessage());
         }
     }
 
